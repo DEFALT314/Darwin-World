@@ -5,4 +5,4 @@
 
    3. Szczur
 
-   4. https://gitexercises.fracz.com/committer/ba8d437192d1e7882546566a28ccb88933c5dbbd
+   4. https://gitexercises.fracz.com/committer/ba8d437192d1e7882546566a28ccb88933c5dbbd?email=klwid04@gmail.com
