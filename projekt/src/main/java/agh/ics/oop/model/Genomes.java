@@ -1,6 +1,11 @@
 package agh.ics.oop.model;
 
+import java.util.List;
+
 public class Genomes extends GenomesAbstract{
+    public Genomes(List<Integer> genomes) {
+        super(genomes);
+    }
     public Genomes(SimulationConfig conf) {
         super(conf);
     }

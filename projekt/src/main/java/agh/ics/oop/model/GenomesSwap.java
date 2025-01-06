@@ -1,7 +1,12 @@
 package agh.ics.oop.model;
 
+import java.util.List;
+
 public class GenomesSwap extends GenomesAbstract {
 
+    public GenomesSwap(List<Integer> genomes) {
+        super(genomes);
+    }
 
     public GenomesSwap(Animal animal1, Animal animal2, SimulationConfig conf) {
         super(animal1, animal2, conf);
