@@ -23,8 +23,18 @@ public class Animal implements WorldElement{
         this.orientation = MapDirection.values()[random.nextInt(8)];
         this.localisation = localisation;
         this.energy = config.getStartingAnimalEnergy();
-        this.genome = new Genomes(config.getGenomeLength());
+        this.genome = generateGenomes();
     }
+
+    public Animal(Vector2d localisation, Genomes genomes,Animal animal1, Animal animal2, int energy, SimulationConfig conf) {
+        this.conf = conf;
+        this.localisation = localisation;
+        this.energy = energy;
+        this.genome = genomes;
+        this.parentOne = animal1;
+        this.parentTwo = animal2;
+    }
+
 
     @Override
     public String toString() {
@@ -54,11 +64,32 @@ public class Animal implements WorldElement{
         if (this.energy < conf.getEnergyToReproduce() || partner.energy < conf.getEnergyToReproduce()){
             return Optional.empty();
         }
-        this.energy -= conf.getEnergyToReproduce();
-        partner.energy -= conf.getEnergyToReproduce();
+        this.subtractEnergy(conf.getEnergyToReproduce());
+        partner.subtractEnergy(conf.getEnergyToReproduce());
+        this.addChildrenCnt();
+        partner.addChildrenCnt();
+        this.addDescendantCnt();
+        partner.addDescendantCnt();
+        Genomes childGenomes = generateGenomes(partner);
+        Animal child = new Animal(localisation,childGenomes, this, partner,conf.getEnergyToReproduce()*2,conf);
+        return Optional.of(child);
 
-        Genomes childGenomes = new Genomes(this, partner, conf);
-
+    }
+    private Genomes generateGenomes() {
+        if( conf.getMutationVariant() ==0) {
+            return new Genomes(conf.getGenomeLength());
+        }
+        else {
+            return new GenomesReplacing(conf.getGenomeLength());
+        }
+    }
+    private Genomes generateGenomes(Animal partner) {
+        if( conf.getMutationVariant() ==0) {
+            return new Genomes(this, partner, conf);
+        }
+        else {
+            return new Genomes(this, partner, conf);
+        }
     }
 
     private void rotateAnimal(int numberOfRotations) {
@@ -76,8 +107,11 @@ public class Animal implements WorldElement{
     public int getEnergy() {
         return energy;
     }
-    public void setEnergy(int energy) {
-        this.energy = energy;
+    public void addEnergy(int energy) {
+        this.energy += energy;
+    }
+    public void subtractEnergy(int energy) {
+        this.energy -= energy;
     }
     public int getChildrenCnt() {
         return childrenCnt;
@@ -121,7 +155,7 @@ public class Animal implements WorldElement{
         this.descendantCnt++;
     }
 
-    public void setPlantEaten() {
+    public void addPlantEaten() {
         this.plantEaten += 1;
     }
     public int getPlantEaten() {

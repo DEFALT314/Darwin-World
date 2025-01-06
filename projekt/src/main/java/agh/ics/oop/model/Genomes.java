@@ -7,6 +7,7 @@ public class Genomes {
     private int activeGenom;
     private List<Integer> genomes;
     private int n;
+    private SimulationConfig conf;
     public Genomes(int n) {
         this.n = n;
         Random random = new Random();
@@ -17,7 +18,7 @@ public class Genomes {
     }
 
     public Genomes(Animal animal, Animal parent, SimulationConfig conf) {
-
+        this.conf = conf;
     }
 
     public int mutate(){
