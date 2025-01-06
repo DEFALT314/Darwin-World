@@ -95,7 +95,7 @@ public class Animal implements WorldElement{
             return new Genomes(this, partner, conf);
         }
         else {
-            return new GenomesAbstract(this, partner, conf);
+            return new GenomesSwap(this, partner, conf);
         }
     }
 
