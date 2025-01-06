@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 
 public class Animal implements WorldElement{
-    private final Genomes genome;
+    private final GenomesAbstract genome;
     private MapDirection orientation;
     private Vector2d localisation;
     private int energy= 0;
@@ -17,6 +17,13 @@ public class Animal implements WorldElement{
     private boolean isDead = false;
     private int plantEaten;
     private final SimulationConfig conf;
+    public Animal(Vector2d localisation, MapDirection direction, SimulationConfig config){
+        this.conf = config;
+        this.orientation = direction;
+        this.localisation = localisation;
+        this.energy = config.getStartingAnimalEnergy();
+        this.genome = generateGenomes();
+    }
     public Animal(Vector2d localisation, SimulationConfig config){
         Random random = new Random();
         this.conf = config;
@@ -26,7 +33,7 @@ public class Animal implements WorldElement{
         this.genome = generateGenomes();
     }
 
-    public Animal(Vector2d localisation, Genomes genomes,Animal animal1, Animal animal2, int energy, SimulationConfig conf) {
+    public Animal(Vector2d localisation, GenomesAbstract genomes, Animal animal1, Animal animal2, int energy, SimulationConfig conf) {
         this.conf = conf;
         this.localisation = localisation;
         this.energy = energy;
@@ -70,25 +77,25 @@ public class Animal implements WorldElement{
         partner.addChildrenCnt();
         this.addDescendantCnt();
         partner.addDescendantCnt();
-        Genomes childGenomes = generateGenomes(partner);
+        GenomesAbstract childGenomes = generateGenomes(partner);
         Animal child = new Animal(localisation,childGenomes, this, partner,conf.getEnergyToReproduce()*2,conf);
         return Optional.of(child);
 
     }
-    private Genomes generateGenomes() {
+    private GenomesAbstract generateGenomes() {
         if( conf.getMutationVariant() ==0) {
-            return new Genomes(conf.getGenomeLength());
+            return new Genomes(conf);
         }
         else {
-            return new GenomesReplacing(conf.getGenomeLength());
+            return new GenomesSwap(conf);
         }
     }
-    private Genomes generateGenomes(Animal partner) {
+    private GenomesAbstract generateGenomes(Animal partner) {
         if( conf.getMutationVariant() ==0) {
             return new Genomes(this, partner, conf);
         }
         else {
-            return new Genomes(this, partner, conf);
+            return new GenomesAbstract(this, partner, conf);
         }
     }
 
@@ -132,7 +139,7 @@ public class Animal implements WorldElement{
         return parentTwo;
     }
 
-    public Genomes getGenome() {
+    public GenomesAbstract getGenome() {
         return genome;
     }
     public boolean isDead() {
