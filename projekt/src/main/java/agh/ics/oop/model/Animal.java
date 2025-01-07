@@ -17,12 +17,12 @@ public class Animal implements WorldElement{
     private boolean isDead = false;
     private int plantEaten;
     private final SimulationConfig conf;
-    public Animal(Vector2d localisation, MapDirection direction, SimulationConfig config){
+    public Animal(Vector2d localisation, MapDirection direction, GenomesAbstract genomes, SimulationConfig config){
         this.conf = config;
         this.orientation = direction;
         this.localisation = localisation;
         this.energy = config.getStartingAnimalEnergy();
-        this.genome = generateGenomes();
+        this.genome = genomes;
     }
     public Animal(Vector2d localisation, SimulationConfig config){
         Random random = new Random();
@@ -52,7 +52,7 @@ public class Animal implements WorldElement{
     }
     public void move(Boundary boundary){
         int activeGenom = genome.getActiveGenom();
-        rotateAnimal(activeGenom);
+        rotateAnimal(genome.getGenomes().get(activeGenom));
         Vector2d newPosition = localisation.add(orientation.toUnitVector());
         if (boundary.downLeft().getY() > newPosition.getY() || newPosition.getY() > boundary.upperRight().getY()){
             rotateAnimal(4);

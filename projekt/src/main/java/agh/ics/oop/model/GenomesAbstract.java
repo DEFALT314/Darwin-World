@@ -9,9 +9,10 @@ public abstract class GenomesAbstract {
     protected List<Integer> genomes = new ArrayList<>();
     protected Random random = new Random();
     protected final SimulationConfig conf;
-    public GenomesAbstract(List<Integer> genomes) {
+    public GenomesAbstract(List<Integer> genomes, SimulationConfig conf) {
+        this.conf = conf;
         this.genomes = genomes;
-        conf = null;
+        activeGenom = 0;
     }
     public GenomesAbstract(SimulationConfig conf) {
         this.conf = conf;

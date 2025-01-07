@@ -4,8 +4,8 @@ import java.util.List;
 
 public class GenomesSwap extends GenomesAbstract {
 
-    public GenomesSwap(List<Integer> genomes) {
-        super(genomes);
+    public GenomesSwap(List<Integer> genomes, SimulationConfig conf) {
+        super(genomes, conf);
     }
 
     public GenomesSwap(Animal animal1, Animal animal2, SimulationConfig conf) {

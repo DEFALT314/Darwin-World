@@ -3,13 +3,12 @@ package agh.ics.oop.model;
 import java.util.List;
 
 public class Genomes extends GenomesAbstract{
-    public Genomes(List<Integer> genomes) {
-        super(genomes);
+    public Genomes(List<Integer> genomes, SimulationConfig conf) {
+        super(genomes, conf);
     }
     public Genomes(SimulationConfig conf) {
         super(conf);
     }
-
     public Genomes(Animal animal, Animal partner, SimulationConfig conf) {
         super(animal, partner, conf);
     }

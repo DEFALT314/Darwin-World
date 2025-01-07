@@ -1,0 +1,86 @@
+package agh.ics.oop.model;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class AnimalTest {
+    SimulationConfig conf = new SimulationConfig(4, 4, "ziemia",
+            0, 0, 0, "0", 0,
+            20, 30, 25, 2, 5,
+            0, 4, "0");
+
+    @Test
+    void startingEnergyTest() {
+        Animal animal = new Animal(new Vector2d(2, 2), conf);
+        assertEquals(20, animal.getEnergy());
+    }
+
+    @Test
+    void addEnergyTest() {
+        Animal animal = new Animal(new Vector2d(2, 2), conf);
+        animal.addEnergy(5);
+        assertEquals(25, animal.getEnergy());
+    }
+
+    @Test
+    void subtractEnergyTest() {
+        Animal animal = new Animal(new Vector2d(2, 2), conf);
+        animal.subtractEnergy(5);
+        assertEquals(15, animal.getEnergy());
+    }
+
+    @Test
+    void moveTest() {
+        Genomes genome = new Genomes(List.of(0, 0, 0, 0), conf);
+        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.NORTH, genome, conf);
+        Boundary boundary = new Boundary(new Vector2d(0, 0), new Vector2d(3, 3));
+        animal.move(boundary);
+        assertEquals(new Vector2d(2, 3), animal.getPosition());
+    }
+
+    @Test
+    void cannotMoveBeyondPoles() {
+        Genomes genome = new Genomes(List.of(0, 0, 0, 0), conf);
+        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.NORTH, genome, conf);
+        Boundary boundary = new Boundary(new Vector2d(0, 0), new Vector2d(3, 3));
+        animal.move(boundary);
+        animal.move(boundary);
+        assertEquals(new Vector2d(2, 3), animal.getPosition());
+        assertEquals(MapDirection.SOUTH, animal.getOrientation());
+    }
+
+    @Test
+    void earthRoundnessTest() {
+        Genomes genome = new Genomes(List.of(0, 0, 0, 0), conf);
+        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.EAST, genome, conf);
+        Boundary boundary = new Boundary(new Vector2d(0, 0), new Vector2d(3, 3));
+        animal.move(boundary);
+        animal.move(boundary);
+        assertEquals(new Vector2d(0, 2), animal.getPosition());
+    }
+
+    @Test
+    void notEnoughEnergyToReproduce() {
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf);
+        Animal animal2 = new Animal(new Vector2d(2, 2), conf);
+        animal1.addEnergy(5);
+        assertEquals(Optional.empty(), animal1.reproduce(animal2));
+        assertEquals(Optional.empty(), animal2.reproduce(animal1));
+    }
+
+    @Test
+    void reproduceTestRandomGenomes() {
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf);
+        Animal animal2 = new Animal(new Vector2d(2, 2), conf);
+        animal1.addEnergy(5);
+        animal2.addEnergy(5);
+        Optional<Animal> child = animal1.reproduce(animal2);
+        assertTrue(child.isPresent());
+        assertEquals(animal1, child.get().getParentOne());
+        assertEquals(animal2, child.get().getParentTwo());
+    }
+}
