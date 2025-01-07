@@ -58,6 +58,6 @@ public abstract class GenomesAbstract {
     public int getActiveGenom() {
         int oldGenom = activeGenom;
         activeGenom = (activeGenom + 1) % conf.getGenomeLength();
-        return oldGenom;
+        return genomes.get(oldGenom);
     }
 }

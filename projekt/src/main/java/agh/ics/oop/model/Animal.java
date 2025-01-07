@@ -52,7 +52,7 @@ public class Animal implements WorldElement{
     }
     public void move(Boundary boundary){
         int activeGenom = genome.getActiveGenom();
-        rotateAnimal(genome.getGenomes().get(activeGenom));
+        rotateAnimal(activeGenom);
         Vector2d newPosition = localisation.add(orientation.toUnitVector());
         if (boundary.downLeft().getY() > newPosition.getY() || newPosition.getY() > boundary.upperRight().getY()){
             rotateAnimal(4);
