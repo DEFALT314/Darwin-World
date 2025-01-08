@@ -25,9 +25,9 @@ public abstract class GenomesAbstract {
 
     public GenomesAbstract(Animal animal1, Animal animal2, SimulationConfig conf) {
         this.conf = conf;
-        Animal stronger = animal1.getEnergy() >= animal2.getEnergy() ? animal1  : animal2;
-        Animal weaker = animal1.getEnergy() < animal2.getEnergy() ? animal1  : animal2;
-        int strongerLength = (int) (conf.getGenomeLength() * ((double) stronger.getEnergy() / (stronger.getEnergy() + weaker.getEnergy())));
+        Animal stronger = animal1.getInfo().getEnergy() >= animal2.getInfo().getEnergy() ? animal1  : animal2;
+        Animal weaker = animal1.getInfo().getEnergy() < animal2.getInfo().getEnergy() ? animal1  : animal2;
+        int strongerLength = (int) (conf.getGenomeLength() * ((double) stronger.getInfo().getEnergy() / (stronger.getInfo().getEnergy() + weaker.getInfo().getEnergy())));
         int weakerLength = conf.getGenomeLength() - strongerLength;
         int i = random.nextInt(2);
         if (i==0){
