@@ -7,8 +7,6 @@ import java.util.List;
 public class Box {
     private final List<Animal> animals = new ArrayList<>();
     private Plant plant;
-    private int energyDecreas= 1;
-
     public void addAnimal(Animal animal){
         animals.add(animal);
     }

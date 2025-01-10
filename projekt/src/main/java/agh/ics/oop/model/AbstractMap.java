@@ -2,14 +2,14 @@ package agh.ics.oop.model;
 
 import java.util.*;
 
-public class Map implements WorldMap{
+public abstract class AbstractMap implements WorldMap{
     private final Boundary boundary;
     private final int height;
     private final int width;
     private final HashMap<Vector2d, Box> boxes;
 
 
-    public Map(int width, int height) {
+    public AbstractMap(int width, int height) {
         this.height = height;
         this.width = width;
         this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
@@ -18,26 +18,44 @@ public class Map implements WorldMap{
     @Override
     public void place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
+            addBoxIfDontExist(animal.getPosition());
             boxes.get(animal.getPosition()).addAnimal(animal);
         }
 
     }
-    public void remove(Animal animal) throws IncorrectPositionException {
 
-        if (canMoveTo(animal.getPosition())) {
+    @Override
+    public void moveAnimal(Animal animal) {
+        boxes.get(animal.getPosition()).removeAnimal(animal);
+        reduceEnergyToMove(animal);
+        animal.move(boundary);
+        addBoxIfDontExist(animal.getPosition());
+        boxes.get(animal.getPosition()).addAnimal(animal);
+    }
+
+    public void eat(Plant plant) {
+        
+    }
+    protected abstract void reduceEnergyToMove(Animal animal);
+
+    private void addBoxIfDontExist(Vector2d position) {
+        if (checkIfBoxExists(position)) {
+            boxes.put(position, new Box());
+        }
+    }
+    private boolean checkIfBoxExists(Vector2d position) {
+        return !boxes.containsKey(position);
+    }
+    public void remove(Animal animal) throws IncorrectPositionException {
+        if (canMoveTo(animal.getPosition()) && checkIfBoxExists(animal.getPosition())) {
             boxes.get(animal.getPosition()).removeAnimal(animal);
         }
-
     }
     public Optional<Plant> getPlant(Vector2d location) {
         return  Optional.of(boxes.get(location).getPlant());
     }
 
 
-    @Override
-    public void move(Animal animal) {
-
-    }
 
     @Override
     public boolean isOccupied(Vector2d position) {
