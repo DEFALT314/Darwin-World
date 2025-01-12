@@ -29,7 +29,14 @@ public class Simulation implements Runnable {
             moveAnimals();
             eatPlants();
             reproduce();
+            spawnPlants(conf.getPlantsPerDay());
             dayFinished();
+            System.out.println(worldMap);
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -63,7 +70,6 @@ public class Simulation implements Runnable {
         List<Animal> deadAnimals = worldMap.getDeadAnimals();
         for (Animal animal: deadAnimals){
             worldMap.remove(animal);
-            animal.markAsDead();
         }
     }
 

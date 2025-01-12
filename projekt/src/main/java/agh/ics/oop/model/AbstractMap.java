@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.util.MapVisualizer;
+
 import java.util.*;
 
 public abstract class AbstractMap implements WorldMap{
@@ -7,6 +9,7 @@ public abstract class AbstractMap implements WorldMap{
     private final int height;
     private final int width;
     private final Map<Vector2d, Box> boxes;
+    private final MapVisualizer mapVisualizer = new MapVisualizer(this);
 
 
     public AbstractMap(int width, int height) {
@@ -40,12 +43,12 @@ public abstract class AbstractMap implements WorldMap{
     protected abstract void reduceEnergyToMove(Animal animal);
 
     private void addBoxIfDontExist(Vector2d position) {
-        if (checkIfBoxExists(position)) {
+        if (!checkIfBoxExists(position)) {
             boxes.put(position, new Box());
         }
     }
     private boolean checkIfBoxExists(Vector2d position) {
-        return !boxes.containsKey(position);
+        return boxes.containsKey(position);
     }
     public void remove(Animal animal) {
         if (canMoveTo(animal.getPosition()) && checkIfBoxExists(animal.getPosition())) {
@@ -79,18 +82,29 @@ public abstract class AbstractMap implements WorldMap{
     }
 
     @Override
-    public UUID getId() {
-        return null;
+    public String toString() {
+
+        return mapVisualizer.draw(boundary.downLeft(), boundary.upperRight());
     }
 
-    @Override
-    public Boundary getCurrentBounds() {
-        return null;
-    }
+
 
     @Override
-    public WorldElement objectAt(Vector2d position) {
-        return null;
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        if (!checkIfBoxExists(position)) {
+            return Optional.empty();
+        }
+        Optional<Animal> first = boxes.get(position).getAnimals().stream().findFirst();
+        if(first.isPresent()){
+            return Optional.of(first.get());
+        }
+        Optional<Plant> plant = boxes.get(position).getPlant();
+        if(plant.isPresent()){
+            return Optional.of(plant.get());
+        }
+        return Optional.empty();
+
+
     }
 
 
@@ -111,7 +125,7 @@ public abstract class AbstractMap implements WorldMap{
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return false;
+        return position.follows(boundary.downLeft()) && position.precedes(boundary.upperRight());
     }
 
     public void place(Plant plant) {

@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -34,7 +35,6 @@ public interface WorldMap extends MoveValidator {
      * @return True if the position is occupied.
      */
     boolean isOccupied(Vector2d position);
-    UUID getId();
 
     /**
      * Return an animal at a given position.
@@ -42,7 +42,6 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    Boundary getCurrentBounds();
-    WorldElement objectAt(Vector2d position);
+    Optional<WorldElement> objectAt(Vector2d position);
 
 }

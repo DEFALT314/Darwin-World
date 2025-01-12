@@ -1,9 +1,6 @@
 package agh.ics.oop.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Box {
     private final List<Animal> animals = new ArrayList<>();
@@ -26,6 +23,11 @@ public class Box {
     public boolean isEmpty(){
         return animals.isEmpty() && plant == null;
     }
+
+    public Optional<Plant> getPlant() {
+        return Optional.of(plant);
+    }
+
     public void eatPlant() {
         if (plant == null || animals.isEmpty()) return;
         sortAnimals();
@@ -42,7 +44,13 @@ public class Box {
         Collections.reverse(animals);
     }
 
-    public void reproduce() {
+    public Optional<Animal> reproduce() {
+        sortAnimals();
+        if (animals.size() <2 || animals.get(0).getEnergy() <0 || animals.get(0).getEnergy() <0) return Optional.empty();
+        Optional<Animal> animal =  animals.getFirst().reproduce(animals.get(1));
+        animal.ifPresent(this::addAnimal);
+        return animal;
+
 
     }
 }

@@ -62,6 +62,7 @@ public class Animal implements WorldElement {
 
     public void move(Boundary boundary) {
         int activeGenom = genome.getActiveGenom();
+        System.out.println(info.getEnergy());
         info.incrementDay();
         rotateAnimal(activeGenom);
         Vector2d newPosition = localisation.add(orientation.toUnitVector());
@@ -88,12 +89,13 @@ public class Animal implements WorldElement {
             return Optional.empty();
         }
 
-        info.subtractEnergy(conf.getEnergyToReproduce());
-        partnerInfo.subtractEnergy(conf.getEnergyToReproduce());
+
         info.incrementDescendantAndChildCount();
         partnerInfo.incrementDescendantAndChildCount();
 
         GenomesAbstract childGenomes = genomesFactory.generateGenomes(this, partner, conf);
+        info.subtractEnergy(conf.getEnergyToReproduce());
+        partnerInfo.subtractEnergy(conf.getEnergyToReproduce());
         Animal child = new Animal(localisation, childGenomes, this, partner, conf.getEnergyToReproduce() * 2, conf, genomesFactory);
         return Optional.of(child);
     }
