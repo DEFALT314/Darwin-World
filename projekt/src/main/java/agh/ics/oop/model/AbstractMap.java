@@ -6,7 +6,7 @@ public abstract class AbstractMap implements WorldMap{
     private final Boundary boundary;
     private final int height;
     private final int width;
-    private final HashMap<Vector2d, Box> boxes;
+    private final Map<Vector2d, Box> boxes;
 
 
     public AbstractMap(int width, int height) {
@@ -27,6 +27,7 @@ public abstract class AbstractMap implements WorldMap{
     @Override
     public void moveAnimal(Animal animal) {
         boxes.get(animal.getPosition()).removeAnimal(animal);
+        removeBoxIfEmpty(animal.getPosition());
         reduceEnergyToMove(animal);
         animal.move(boundary);
         addBoxIfDontExist(animal.getPosition());
@@ -46,15 +47,30 @@ public abstract class AbstractMap implements WorldMap{
     private boolean checkIfBoxExists(Vector2d position) {
         return !boxes.containsKey(position);
     }
-    public void remove(Animal animal) throws IncorrectPositionException {
+    public void remove(Animal animal) {
         if (canMoveTo(animal.getPosition()) && checkIfBoxExists(animal.getPosition())) {
             boxes.get(animal.getPosition()).removeAnimal(animal);
+            removeBoxIfEmpty(animal.getPosition());
         }
     }
-    public Optional<Plant> getPlant(Vector2d location) {
-        return  Optional.of(boxes.get(location).getPlant());
+    public void removeBoxIfEmpty(Vector2d position) {
+        if (boxes.get(position).isEmpty()) {
+            boxes.remove(position);
+        }
+    }
+    public boolean isNotPlanted(Vector2d location) {
+        return boxes.get(location) == null || boxes.get(location).isPlanted();
     }
 
+    public List<Vector2d> getEmptyPositions() {
+        return boxes.entrySet().stream()
+                .filter(entry -> entry.getValue().isEmpty())
+                .map(Map.Entry::getKey)
+                .toList();
+    }
+    public List<Box> getBoxesWithPlants(){
+        return boxes.values().stream().filter(Box::isPlanted).toList();
+    }
 
 
     @Override
@@ -77,13 +93,29 @@ public abstract class AbstractMap implements WorldMap{
         return null;
     }
 
-    @Override
-    public Collection<WorldElement> getElements() {
-        return List.of();
+
+    public Map<Vector2d, Box> getBoxes() {
+        return boxes;
+    }
+    public List<Animal> getDeadAnimals() {
+        return  getAnimals().stream().filter((Animal A) -> A.isDead()).toList();
+    }
+    public List<Animal> getAliveAnimals() {
+        return getAnimals().stream().filter((Animal A) -> !A.isDead()).toList();
+    }
+    public List<Animal> getAnimals() {
+        return boxes.values().stream()
+                .flatMap(box -> box.getAnimals().stream())
+                .toList();
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
         return false;
+    }
+
+    public void place(Plant plant) {
+        addBoxIfDontExist(plant.getPosition());
+        boxes.get(plant.getPosition()).setPlant(plant);
     }
 }

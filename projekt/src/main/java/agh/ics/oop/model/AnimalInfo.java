@@ -13,6 +13,7 @@ public class AnimalInfo {
     private int deathDay = 0;
     private boolean isDead = false;
     private int plantEaten = 0;
+    private int day;
 
     public void setParentOne(Animal parentOne) {
         this.parentOne = parentOne;
@@ -22,9 +23,16 @@ public class AnimalInfo {
     }
     public void addEnergy(int energy) {
         this.energy += energy;
+        if (this.energy < 0) {
+            markAsDead();
+        }
     }
     public void subtractEnergy(int energy) {
+
         this.energy -= energy;
+        if (this.energy < 0) {
+            markAsDead();
+        }
     }
     public int getChildrenCnt() {
         return childCount;
@@ -50,6 +58,9 @@ public class AnimalInfo {
 
     public void setEnergy(int energy) {
         this.energy = energy;
+        if (this.energy < 0) {
+            markAsDead();
+        }
     }
 
     public int getChildCount() {
@@ -74,10 +85,18 @@ public class AnimalInfo {
     public boolean isDead() {
         return isDead;
     }
+    public void markAsDead() {
+        this.isDead = true;
+        this.deathDay = day;
+    }
 
     public void markAsDead(int deathDay) {
         this.isDead = true;
         this.deathDay = deathDay;
+    }
+
+    public int getDay() {
+        return day;
     }
 
     public int getDeathDay() {
@@ -98,5 +117,9 @@ public class AnimalInfo {
 
     public Animal getParentTwo() {
         return parentTwo;
+    }
+
+    public void incrementDay() {
+        day++;
     }
 }

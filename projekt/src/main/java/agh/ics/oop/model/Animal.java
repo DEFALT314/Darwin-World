@@ -62,8 +62,10 @@ public class Animal implements WorldElement {
 
     public void move(Boundary boundary) {
         int activeGenom = genome.getActiveGenom();
+        info.incrementDay();
         rotateAnimal(activeGenom);
         Vector2d newPosition = localisation.add(orientation.toUnitVector());
+
 
         if (boundary.downLeft().getY() > newPosition.getY() || newPosition.getY() > boundary.upperRight().getY()) {
             rotate180();
@@ -117,7 +119,12 @@ public class Animal implements WorldElement {
                 Objects.equals(localisation, animal.localisation) &&
                 Objects.equals(info, animal.info);
     }
-
+    public int getEnergy(){
+        return info.getEnergy();
+    }
+    public int getChildrenCnt(){
+        return info.getChildrenCnt();
+    }
     @Override
     public int hashCode() {
         return Objects.hash(genome, orientation, localisation, info);
@@ -125,6 +132,26 @@ public class Animal implements WorldElement {
 
     public GenomesAbstract getGenome() {
         return genome;
+    }
+
+    public void subtractEnergy(int i) {
+        info.subtractEnergy(i);
+    }
+
+    public void addEnergy(int i) {
+        info.addEnergy(i);
+    }
+
+    public void markAsDead() {
+        info.markAsDead();
+    }
+
+    public boolean isDead() {
+        return info.isDead();
+    }
+
+    public int getAge() {
+        return info.getDay();
     }
 }
 
