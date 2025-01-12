@@ -1,8 +1,6 @@
 package agh.ics.oop.model;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class AnimalInfo {
     private int energy = 0;
@@ -68,7 +66,7 @@ public class AnimalInfo {
     }
     public void incrementDescendantAndChildCount() {
         incrementChildCount();
-        incrementDescendantCount();
+        incrementDescendantCount(new HashSet<>());
     }
     private void incrementChildCount() {
         childCount++;
@@ -76,11 +74,27 @@ public class AnimalInfo {
 
     public int getDescendantCount() {
         return descendantCount;
+
+    }
+    private void incrementDescendantCount(Set<AnimalInfo> visited) {
+        if (visited.contains(this)) {
+            return;
+        }
+
+        visited.add(this);
+
+        descendantCount++;
+
+        if (parentOne != null) {
+            parentOne.getInfo().incrementDescendantCount(visited);
+        }
+        if (parentTwo != null) {
+            parentTwo.getInfo().incrementDescendantCount(visited);
+        }
     }
 
-    private void incrementDescendantCount() {
-        descendantCount++;
-    }
+
+
 
     public boolean isDead() {
         return isDead;
