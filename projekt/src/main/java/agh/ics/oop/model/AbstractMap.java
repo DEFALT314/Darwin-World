@@ -23,8 +23,9 @@ public abstract class AbstractMap implements WorldMap{
         if (canMoveTo(animal.getPosition())) {
             addBoxIfDontExist(animal.getPosition());
             boxes.get(animal.getPosition()).addAnimal(animal);
+            return;
         }
-
+        throw new IncorrectPositionException(animal.getPosition());
     }
 
     @Override
