@@ -111,6 +111,10 @@ public class Animal implements WorldElement {
         return localisation;
     }
 
+    public MapDirection getOrientation() {
+        return orientation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

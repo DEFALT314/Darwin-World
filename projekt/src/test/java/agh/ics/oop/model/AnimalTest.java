@@ -12,23 +12,23 @@ class AnimalTest {
             0, 0, 0, "0", 0,
             20, 30, 25, 2, 5,
             0, 4, "0");
-
+    GenomesFactory genomesFactory = new NormalGenomesFactory();
     @Test
     void startingEnergyTest() {
-        Animal animal = new Animal(new Vector2d(2, 2), conf);
+        Animal animal = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         assertEquals(20, animal.getEnergy());
     }
 
     @Test
     void addEnergyTest() {
-        Animal animal = new Animal(new Vector2d(2, 2), conf);
+        Animal animal = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         animal.addEnergy(5);
         assertEquals(25, animal.getEnergy());
     }
 
     @Test
     void subtractEnergyTest() {
-        Animal animal = new Animal(new Vector2d(2, 2), conf);
+        Animal animal = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         animal.subtractEnergy(5);
         assertEquals(15, animal.getEnergy());
     }
@@ -36,7 +36,7 @@ class AnimalTest {
     @Test
     void moveTest() {
         Genomes genome = new Genomes(List.of(0, 0, 0, 0), conf);
-        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.NORTH, genome, conf);
+        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.NORTH, genome, conf, genomesFactory);
         Boundary boundary = new Boundary(new Vector2d(0, 0), new Vector2d(3, 3));
         animal.move(boundary);
         assertEquals(new Vector2d(2, 3), animal.getPosition());
@@ -45,7 +45,7 @@ class AnimalTest {
     @Test
     void cannotMoveBeyondPoles() {
         Genomes genome = new Genomes(List.of(0, 0, 0, 0), conf);
-        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.NORTH, genome, conf);
+        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.NORTH, genome, conf, genomesFactory);
         Boundary boundary = new Boundary(new Vector2d(0, 0), new Vector2d(3, 3));
         animal.move(boundary);
         animal.move(boundary);
@@ -56,7 +56,7 @@ class AnimalTest {
     @Test
     void earthRoundnessTest() {
         Genomes genome = new Genomes(List.of(0, 0, 0, 0), conf);
-        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.EAST, genome, conf);
+        Animal animal = new Animal(new Vector2d(2, 2), MapDirection.EAST, genome, conf, genomesFactory);
         Boundary boundary = new Boundary(new Vector2d(0, 0), new Vector2d(3, 3));
         animal.move(boundary);
         animal.move(boundary);
@@ -65,8 +65,8 @@ class AnimalTest {
 
     @Test
     void notEnoughEnergyToReproduce() {
-        Animal animal1 = new Animal(new Vector2d(2, 2), conf);
-        Animal animal2 = new Animal(new Vector2d(2, 2), conf);
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
+        Animal animal2 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         animal1.addEnergy(5);
         assertEquals(Optional.empty(), animal1.reproduce(animal2));
         assertEquals(Optional.empty(), animal2.reproduce(animal1));
@@ -74,13 +74,13 @@ class AnimalTest {
 
     @Test
     void reproduceTestRandomGenomes() {
-        Animal animal1 = new Animal(new Vector2d(2, 2), conf);
-        Animal animal2 = new Animal(new Vector2d(2, 2), conf);
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
+        Animal animal2 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         animal1.addEnergy(5);
         animal2.addEnergy(5);
         Optional<Animal> child = animal1.reproduce(animal2);
         assertTrue(child.isPresent());
-        assertEquals(animal1, child.get().getParentOne());
-        assertEquals(animal2, child.get().getParentTwo());
+        assertEquals(animal1, child.get().getInfo().getParentOne());
+        assertEquals(animal2, child.get().getInfo().getParentTwo());
     }
 }
