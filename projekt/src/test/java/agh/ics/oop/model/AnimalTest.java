@@ -82,5 +82,25 @@ class AnimalTest {
         assertTrue(child.isPresent());
         assertEquals(animal1, child.get().getInfo().getParentOne());
         assertEquals(animal2, child.get().getInfo().getParentTwo());
+        assertEquals(1, animal1.getInfo().getDescendantCount());
+        assertEquals(1, animal2.getInfo().getDescendantCount());
+    }
+
+    @Test
+    void descendantCountTest() {
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
+        Animal animal2 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
+        Animal animal3 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
+        animal1.addEnergy(10);
+        animal2.addEnergy(10);
+        animal3.addEnergy(10);
+        Optional<Animal> child = animal1.reproduce(animal2);
+        child.get().addEnergy(30);
+        Optional<Animal> child2 = animal3.reproduce(child.get());
+        assertEquals(2, animal1.getInfo().getDescendantCount());
+        assertEquals(2, animal2.getInfo().getDescendantCount());
+        assertEquals(1, animal3.getInfo().getDescendantCount());
+        assertEquals(1, child.get().getInfo().getDescendantCount());
+        assertEquals(0, child2.get().getInfo().getDescendantCount());
     }
 }
