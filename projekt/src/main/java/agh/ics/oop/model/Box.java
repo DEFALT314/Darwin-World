@@ -3,54 +3,48 @@ package agh.ics.oop.model;
 import java.util.*;
 
 public class Box {
-    private final List<Animal> animals = new ArrayList<>();
-    private Plant plant;
-    public void addAnimal(Animal animal){
-        animals.add(animal);
+    private final AnimalContainer animalGroup = new AnimalContainer();
+    private final PlantContainer plantContainer = new PlantContainer();
+
+    public void addAnimal(Animal animal) {
+        animalGroup.addAnimal(animal);
     }
-    public void removeAnimal(Animal animal){
-        animals.remove(animal);
+
+    public void removeAnimal(Animal animal) {
+        animalGroup.removeAnimal(animal);
     }
-    public List<Animal> getAnimals(){
-        return animals;
+
+    public List<Animal> getAnimals() {
+        return animalGroup.getAnimals();
     }
-    public void setPlant(Plant plant){
-        this.plant = plant;
+
+    public void setPlant(Plant plant) {
+        plantContainer.setPlant(plant);
     }
-    public boolean isPlanted(){
-        return plant != null;
+
+    public boolean isPlanted() {
+        return plantContainer.isPlanted();
     }
-    public boolean isEmpty(){
-        return animals.isEmpty() && plant == null;
+
+    public boolean isEmpty() {
+        return animalGroup.isEmpty() && plantContainer.isEmpty();
     }
 
     public Optional<Plant> getPlant() {
-        return Optional.of(plant);
+        return plantContainer.getPlant();
     }
 
     public void eatPlant() {
-        if (plant == null || animals.isEmpty()) return;
-        sortAnimals();
-        Animal animal = animals.get(0);
-        if(!animal.isDead()){
-            animal.addEnergy(plant.getEnergy());
-            plant = null;
-        }
-    }
-
-    private void sortAnimals(){
-        Collections.sort(animals, Comparator.comparingInt(Animal::getEnergy).thenComparingInt(Animal::getAge)
-                .thenComparingInt(Animal::getChildrenCnt));
-        Collections.reverse(animals);
+        if (!plantContainer.isPlanted() || animalGroup.isEmpty()) return;
+        Optional<Animal> strongestAnimal = animalGroup.getStrongestAnimal();
+        strongestAnimal.ifPresent(animal -> {
+            if (!animal.isDead()) {
+                animal.addEnergy(plantContainer.consumePlant());
+            }
+        });
     }
 
     public Optional<Animal> reproduce() {
-        sortAnimals();
-        if (animals.size() <2 || animals.get(0).getEnergy() <0 || animals.get(0).getEnergy() <0) return Optional.empty();
-        Optional<Animal> animal =  animals.getFirst().reproduce(animals.get(1));
-        animal.ifPresent(this::addAnimal);
-        return animal;
-
-
+        return animalGroup.reproduceAnimals();
     }
 }
