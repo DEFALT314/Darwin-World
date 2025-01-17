@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class GenomesAbstract {
@@ -61,5 +62,18 @@ public abstract class GenomesAbstract {
         int oldGenom = activeGenom;
         activeGenom = (activeGenom + 1) % conf.getGenomeLength();
         return genomes.get(oldGenom);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GenomesAbstract that = (GenomesAbstract) o;
+        return Objects.equals(genomes, that.genomes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(genomes);
     }
 }

@@ -2,157 +2,133 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractMap implements WorldMap {
     private final Boundary boundary;
-    private final Map<Vector2d, Box> boxes;
     private final MapVisualizer mapVisualizer = new MapVisualizer(this);
+    private final Boxes boxesContainer = new Boxes();
+    private final DeadAnimalsAgeTracker deadAnimals = new DeadAnimalsAgeTracker();
 
     public AbstractMap(int width, int height) {
         this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
-        this.boxes = new HashMap<>();
+    }
+
+    public void eatPlants() {
+        getBoxesWithPlants().forEach(Box::eatPlant);
+    }
+
+    public void removeDeadAnimals() {
+        getDeadAnimals().forEach(this::remove);
+    }
+
+    public void moveAnimals() {
+        getAnimals().forEach(this::moveAnimal);
+    }
+
+    public void reproduce() {
+        boxesContainer.getBoxes().values().forEach(Box::reproduce);
     }
 
     @Override
     public void place(Animal animal) throws IncorrectPositionException {
         if (canMoveTo(animal.getPosition())) {
-            addBoxIfDontExist(animal.getPosition());
-            boxes.get(animal.getPosition()).addAnimal(animal);
-            return;
+            boxesContainer.addAnimal(animal);
+        } else {
+            throw new IncorrectPositionException(animal.getPosition());
         }
-        throw new IncorrectPositionException(animal.getPosition());
     }
-
+    public DeadAnimalsAgeTracker getDeadAnimalsAgeTracker() {
+        return deadAnimals;
+    }
     @Override
     public void moveAnimal(Animal animal) {
-        boxes.get(animal.getPosition()).removeAnimal(animal);
-        removeBoxIfEmpty(animal.getPosition());
+        boxesContainer.removeAnimal(animal);
         reduceEnergyToMove(animal);
         animal.move(boundary);
-        addBoxIfDontExist(animal.getPosition());
-        boxes.get(animal.getPosition()).addAnimal(animal);
+        boxesContainer.addAnimal(animal);
+        if( animal.isDead()){
+            deadAnimals.addDeadAnimalAge(animal);
+        }
     }
 
     protected abstract void reduceEnergyToMove(Animal animal);
 
-    private void addBoxIfDontExist(Vector2d position) {
-        if (!checkIfBoxExists(position)) {
-            boxes.put(position, new Box());
-        }
-    }
 
-    private boolean checkIfBoxExists(Vector2d position) {
-        return boxes.containsKey(position);
-    }
     @Override
     public void remove(Animal animal) {
-        if (canMoveTo(animal.getPosition()) && checkIfBoxExists(animal.getPosition())) {
-            boxes.get(animal.getPosition()).removeAnimal(animal);
-            removeBoxIfEmpty(animal.getPosition());
+        if (canMoveTo(animal.getPosition())) {
+            boxesContainer.removeAnimal(animal);
         }
     }
 
-    public void removeBoxIfEmpty(Vector2d position) {
-        if (boxes.get(position).isEmpty()) {
-            boxes.remove(position);
-        }
-    }
 
     public boolean isNotPlanted(Vector2d location) {
-        return boxes.get(location) == null || boxes.get(location).isPlanted();
+        return boxesContainer.isNotPlanted(location);
     }
 
     public List<Vector2d> getEmptyPositions() {
-        return boxes.entrySet().stream()
-                .filter(entry -> entry.getValue().isEmpty())
-                .map(Map.Entry::getKey)
-                .toList();
+        return boxesContainer.getEmptyPositions();
     }
 
-    public List<Box> getBoxesWithPlants() {
-        return boxes.values().stream().filter(Box::isPlanted).toList();
+    private List<Box> getBoxesWithPlants() {
+        return boxesContainer.getBoxesWithPlants();
     }
-
-
-
-
-    @Override
-    public String toString() {
-
-        return mapVisualizer.draw(boundary.downLeft(), boundary.upperRight());
-    }
-
-    public void eatPlants() {
-        List<Box> boxesWithPlants = getBoxesWithPlants();
-        for (Box box : boxesWithPlants) {
-            box.eatPlant();
-        }
-    }
-
-    public void removeDeadAnimals() {
-        List<Animal> deadAnimals = getDeadAnimals();
-        for (Animal animal : deadAnimals) {
-            remove(animal);
-        }
-    }
-
-    public void moveAnimals() {
-        List<Animal> animals = getAnimals();
-        for (Animal animal : animals) {
-            moveAnimal(animal);
-        }
-    }
-
-    public void reproduce() {
-        for (Box box : boxes.values()) {
-            box.reproduce();
-        }
-    }
-    @Override
-    public Optional<WorldElement> objectAt(Vector2d position) {
-        if (!checkIfBoxExists(position)) {
-            return Optional.empty();
-        }
-        Optional<Animal> first = boxes.get(position).getAnimals().stream().findFirst();
-        if (first.isPresent()) {
-            return Optional.of(first.get());
-        }
-        Optional<Plant> plant = boxes.get(position).getPlant();
-        if (plant.isPresent()) {
-            return Optional.of(plant.get());
-        }
-        return Optional.empty();
-
-
-    }
-
-
-    public Map<Vector2d, Box> getBoxes() {
-        return boxes;
-    }
-
-    public List<Animal> getDeadAnimals() {
-        return getAnimals().stream().filter(Animal::isDead).toList();
-    }
-
-    public List<Animal> getAliveAnimals() {
-        return getAnimals().stream().filter((Animal A) -> !A.isDead()).toList();
-    }
-
-    public List<Animal> getAnimals() {
-        return boxes.values().stream()
-                .flatMap(box -> box.getAnimals().stream())
-                .toList();
-    }
-
     @Override
     public boolean canMoveTo(Vector2d position) {
         return position.follows(boundary.downLeft()) && position.precedes(boundary.upperRight());
     }
+
     @Override
     public void placePlant(Plant plant) {
-        addBoxIfDontExist(plant.getPosition());
-        boxes.get(plant.getPosition()).setPlant(plant);
+        if (canMoveTo(plant.getPosition())) {
+            boxesContainer.addPlant(plant);
+        }
     }
+    @Override
+    public String toString() {
+        return mapVisualizer.draw(boundary.downLeft(), boundary.upperRight());
+    }
+
+    @Override
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return boxesContainer.objectAt(position);
+    }
+    @Override
+    public int aliveAnimalsCount() {
+        return boxesContainer.getAliveAnimals().size();
+    }
+
+    @Override
+    public int plantsCount() {
+        return getBoxesWithPlants().size();
+    }
+    @Override public int emptyPositionsCount() {
+        return getEmptyPositions().size();
+    }
+    @Override
+    public int deadAnimalsAgeSum() {
+        return deadAnimals.getDeadAnimalsAgeSum();
+    }
+    @Override
+    public int deadAnimalsCount() {
+        return deadAnimals.getDeadAnimalsCount();
+    }
+
+
+    // do testów
+    public List<Animal> getDeadAnimals() {
+        return boxesContainer.getDeadAnimals();
+    }
+
+    public List<Animal> getAliveAnimals() {
+        return boxesContainer.getAliveAnimals();
+    }
+
+    public List<Animal> getAnimals() {
+        return boxesContainer.getAnimals();
+    }
+
+
 }

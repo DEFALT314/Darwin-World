@@ -55,6 +55,6 @@ public class PlantSpawner {
 
     private void placePlantOnCell(List<Vector2d> cells) {
         Vector2d cell = cells.removeLast();
-        simulation.getWorldMap().placePlant(new Plant(cell, simulation.getConf().getPlantEnergy()));
+        worldMap.placePlant(new Plant(cell, conf.getPlantEnergy()));
     }
 }

@@ -7,7 +7,7 @@ public class Simulation implements Runnable {
     private final GenomesFactory genomesFactory;
     private final PlantSpawner plantSpawner;
     private final AnimalSpawner animalSpawner;
-    private int day = 0;
+
 
     public Simulation(AbstractMap worldMap, SimulationConfig conf, GenomesFactory genomesFactory) {
         this.worldMap = worldMap;
@@ -21,12 +21,13 @@ public class Simulation implements Runnable {
 
     public void run() {
         while (true) {
+            System.out.println(worldMap);
             worldMap.removeDeadAnimals();
             worldMap.moveAnimals();
             worldMap.eatPlants();
             worldMap.reproduce();
             plantSpawner.spawnPlants(conf.getPlantsPerDay());
-            dayFinished();
+
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
@@ -35,9 +36,6 @@ public class Simulation implements Runnable {
         }
     }
 
-    private void dayFinished() {
-        day++;
-    }
 
 
 }

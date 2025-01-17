@@ -1,5 +1,8 @@
 package agh.ics.oop.model;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -51,4 +54,12 @@ public interface WorldMap extends MoveValidator {
     void eatPlants();
 
     void reproduce();
+
+    List<Animal> getAliveAnimals();
+    List<Animal> getDeadAnimals();
+    int aliveAnimalsCount();
+    int deadAnimalsCount();
+    int plantsCount();
+    int emptyPositionsCount();
+    int deadAnimalsAgeSum();
 }
