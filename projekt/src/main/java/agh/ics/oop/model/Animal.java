@@ -7,7 +7,6 @@ import java.util.Random;
 public class Animal implements WorldElement {
 
     private static final int GENOME_DIRECTIONS_COUNT = 8;
-
     private final GenomesAbstract genome;
     private final AnimalInfo info = new AnimalInfo();
     private final SimulationConfig conf;

@@ -7,6 +7,6 @@ public class EarthMap extends AbstractMap {
 
     @Override
     protected void reduceEnergyToMove(Animal animal) {
-        animal.getInfo().subtractEnergy(1);
+        animal.subtractEnergy(1);
     }
 }

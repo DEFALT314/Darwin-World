@@ -11,6 +11,6 @@ public class IceMap extends AbstractMap {
     @Override
     protected void reduceEnergyToMove(Animal animal) {
         Vector2d pos = animal.getPosition();
-        animal.getInfo().subtractEnergy(Math.abs(pos.getY() - center) + 1);
+        animal.subtractEnergy(Math.abs(pos.getY() - center) + 1);
     }
 }

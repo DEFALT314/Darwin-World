@@ -2,10 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class AbstractMap implements WorldMap {
     private final Boundary boundary;
@@ -36,7 +33,6 @@ public abstract class AbstractMap implements WorldMap {
         addBoxIfDontExist(animal.getPosition());
         boxes.get(animal.getPosition()).addAnimal(animal);
     }
-
 
     protected abstract void reduceEnergyToMove(Animal animal);
 
@@ -87,7 +83,32 @@ public abstract class AbstractMap implements WorldMap {
         return mapVisualizer.draw(boundary.downLeft(), boundary.upperRight());
     }
 
+    public void eatPlants() {
+        List<Box> boxesWithPlants = getBoxesWithPlants();
+        for (Box box : boxesWithPlants) {
+            box.eatPlant();
+        }
+    }
 
+    public void removeDeadAnimals() {
+        List<Animal> deadAnimals = getDeadAnimals();
+        for (Animal animal : deadAnimals) {
+            remove(animal);
+        }
+    }
+
+    public void moveAnimals() {
+        List<Animal> animals = getAnimals();
+        for (Animal animal : animals) {
+            moveAnimal(animal);
+        }
+    }
+
+    public void reproduce() {
+        for (Box box : boxes.values()) {
+            box.reproduce();
+        }
+    }
     @Override
     public Optional<WorldElement> objectAt(Vector2d position) {
         if (!checkIfBoxExists(position)) {
@@ -112,7 +133,7 @@ public abstract class AbstractMap implements WorldMap {
     }
 
     public List<Animal> getDeadAnimals() {
-        return getAnimals().stream().filter((Animal A) -> A.isDead()).toList();
+        return getAnimals().stream().filter(Animal::isDead).toList();
     }
 
     public List<Animal> getAliveAnimals() {

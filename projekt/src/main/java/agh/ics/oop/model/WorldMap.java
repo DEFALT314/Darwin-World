@@ -43,4 +43,12 @@ public interface WorldMap extends MoveValidator {
     Optional<WorldElement> objectAt(Vector2d position);
 
     boolean isNotPlanted(Vector2d cell);
+
+    void removeDeadAnimals();
+
+    void moveAnimals();
+
+    void eatPlants();
+
+    void reproduce();
 }
