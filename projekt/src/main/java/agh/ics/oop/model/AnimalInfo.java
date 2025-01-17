@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AnimalInfo {
     private int energy = 0;
@@ -13,45 +14,8 @@ public class AnimalInfo {
     private int plantEaten = 0;
     private int day;
 
-    public void setParentOne(Animal parentOne) {
-        this.parentOne = parentOne;
-    }
     public int getEnergy() {
         return energy;
-    }
-    public void addEnergy(int energy) {
-        this.energy += energy;
-        if (this.energy < 0) {
-            markAsDead();
-        }
-    }
-    public void subtractEnergy(int energy) {
-
-        this.energy -= energy;
-        if (this.energy < 0) {
-            markAsDead();
-        }
-    }
-    public int getChildrenCnt() {
-        return childCount;
-    }
-
-
-    public void setDead(boolean dead) {
-        this.isDead = dead;
-    }
-    public void setDeathDay(int deathDay) {
-        this.isDead = true;
-        this.deathDay = deathDay;
-    }
-
-
-    public void addPlantEaten() {
-        this.plantEaten += 1;
-    }
-
-    public void setParentTwo(Animal parentTwo) {
-        this.parentTwo = parentTwo;
     }
 
     public void setEnergy(int energy) {
@@ -61,13 +25,38 @@ public class AnimalInfo {
         }
     }
 
+    public void addEnergy(int energy) {
+        this.energy += energy;
+        if (this.energy < 0) {
+            markAsDead();
+        }
+    }
+
+    public void subtractEnergy(int energy) {
+
+        this.energy -= energy;
+        if (this.energy < 0) {
+            markAsDead();
+        }
+    }
+
+    public int getChildrenCnt() {
+        return childCount;
+    }
+
+    public void addPlantEaten() {
+        this.plantEaten += 1;
+    }
+
     public int getChildCount() {
         return childCount;
     }
+
     public void incrementDescendantAndChildCount() {
         incrementChildCount();
         incrementDescendantCount(new HashSet<>());
     }
+
     private void incrementChildCount() {
         childCount++;
     }
@@ -76,6 +65,7 @@ public class AnimalInfo {
         return descendantCount;
 
     }
+
     private void incrementDescendantCount(Set<AnimalInfo> visited) {
         if (visited.contains(this)) {
             return;
@@ -93,12 +83,14 @@ public class AnimalInfo {
         }
     }
 
-
-
-
     public boolean isDead() {
         return isDead;
     }
+
+    public void setDead(boolean dead) {
+        this.isDead = dead;
+    }
+
     public void markAsDead() {
         this.isDead = true;
         this.deathDay = day;
@@ -117,6 +109,11 @@ public class AnimalInfo {
         return deathDay;
     }
 
+    public void setDeathDay(int deathDay) {
+        this.isDead = true;
+        this.deathDay = deathDay;
+    }
+
     public int getPlantEaten() {
         return plantEaten;
     }
@@ -129,8 +126,16 @@ public class AnimalInfo {
         return parentOne;
     }
 
+    public void setParentOne(Animal parentOne) {
+        this.parentOne = parentOne;
+    }
+
     public Animal getParentTwo() {
         return parentTwo;
+    }
+
+    public void setParentTwo(Animal parentTwo) {
+        this.parentTwo = parentTwo;
     }
 
     public void incrementDay() {

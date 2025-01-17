@@ -12,8 +12,6 @@ public class GenomesSwap extends GenomesAbstract {
         super(animal1, animal2, conf);
     }
 
-
-
     public GenomesSwap(SimulationConfig conf) {
         super(conf);
     }
@@ -23,8 +21,7 @@ public class GenomesSwap extends GenomesAbstract {
         int i = random.nextInt(conf.getGenomeLength());
         int j = random.nextInt(conf.getGenomeLength());
         int temp = genomes.get(i);
-        genomes.set(i,genomes.get(j));
-        genomes.set(j,temp);
-
+        genomes.set(i, genomes.get(j));
+        genomes.set(j, temp);
     }
 }

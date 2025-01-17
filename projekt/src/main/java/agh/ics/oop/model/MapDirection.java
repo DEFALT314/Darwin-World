@@ -1,11 +1,11 @@
 package agh.ics.oop.model;
 
-public enum MapDirection
-{
-    NORTH, SOUTH, WEST, EAST,NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST;
-    public String toString(){
-        return  switch (this) {
-            case EAST-> "E";
+public enum MapDirection {
+    NORTH, SOUTH, WEST, EAST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST;
+
+    public String toString() {
+        return switch (this) {
+            case EAST -> "E";
             case WEST -> "W";
             case NORTH -> "N";
             case SOUTH -> "S";
@@ -17,9 +17,10 @@ public enum MapDirection
         };
 
     }
-    public MapDirection next(){
-        return  switch (this) {
-            case EAST-> SOUTHEAST;
+
+    public MapDirection next() {
+        return switch (this) {
+            case EAST -> SOUTHEAST;
             case SOUTHEAST -> SOUTH;
             case SOUTH -> SOUTHWEST;
             case SOUTHWEST -> WEST;
@@ -29,9 +30,10 @@ public enum MapDirection
             case NORTHEAST -> EAST;
         };
     }
-    public MapDirection previous(){
-        return  switch (this) {
-            case EAST-> NORTHEAST;
+
+    public MapDirection previous() {
+        return switch (this) {
+            case EAST -> NORTHEAST;
             case NORTHEAST -> NORTH;
             case NORTH -> NORTHWEST;
             case NORTHWEST -> WEST;
@@ -41,12 +43,13 @@ public enum MapDirection
             case SOUTHEAST -> EAST;
         };
     }
-    public Vector2d toUnitVector(){
-        return  switch (this) {
-            case EAST-> new Vector2d(1,0);
-            case WEST -> new Vector2d(-1,0);
-            case NORTH-> new Vector2d(0,1);
-            case SOUTH -> new Vector2d(0,-1);
+
+    public Vector2d toUnitVector() {
+        return switch (this) {
+            case EAST -> new Vector2d(1, 0);
+            case WEST -> new Vector2d(-1, 0);
+            case NORTH -> new Vector2d(0, 1);
+            case SOUTH -> new Vector2d(0, -1);
             case NORTHEAST -> new Vector2d(1, 1);
             case SOUTHEAST -> new Vector2d(1, -1);
             case SOUTHWEST -> new Vector2d(-1, -1);

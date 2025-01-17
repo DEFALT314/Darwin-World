@@ -9,11 +9,11 @@ public class Animal implements WorldElement {
     private static final int GENOME_DIRECTIONS_COUNT = 8;
 
     private final GenomesAbstract genome;
-    private MapDirection orientation;
-    private Vector2d localisation;
     private final AnimalInfo info = new AnimalInfo();
     private final SimulationConfig conf;
     private final GenomesFactory genomesFactory;
+    private MapDirection orientation;
+    private Vector2d localisation;
 
     public Animal(Vector2d localisation, MapDirection direction, GenomesAbstract genomes, SimulationConfig config, GenomesFactory genomesFactory) {
         this.conf = config;
@@ -125,12 +125,15 @@ public class Animal implements WorldElement {
                 Objects.equals(localisation, animal.localisation) &&
                 Objects.equals(info, animal.info);
     }
-    public int getEnergy(){
+
+    public int getEnergy() {
         return info.getEnergy();
     }
-    public int getChildrenCnt(){
+
+    public int getChildrenCnt() {
         return info.getChildrenCnt();
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(genome, orientation, localisation, info);

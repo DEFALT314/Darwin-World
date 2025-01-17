@@ -1,6 +1,9 @@
 package agh.ics.oop.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class AnimalContainer {
     private final List<Animal> animals = new ArrayList<>();
@@ -14,7 +17,7 @@ public class AnimalContainer {
     }
 
     public List<Animal> getAnimals() {
-        return new ArrayList<>(animals); // Return a copy to prevent external modification
+        return new ArrayList<>(animals);
     }
 
     public boolean isEmpty() {
@@ -24,7 +27,7 @@ public class AnimalContainer {
     public Optional<Animal> getStrongestAnimal() {
         if (animals.isEmpty()) return Optional.empty();
         sortAnimals();
-        return Optional.of(animals.get(0));
+        return Optional.of(animals.getFirst());
     }
 
     public Optional<Animal> reproduceAnimals() {

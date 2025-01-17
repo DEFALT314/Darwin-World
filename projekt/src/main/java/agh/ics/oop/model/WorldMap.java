@@ -1,8 +1,6 @@
 package agh.ics.oop.model;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -25,16 +23,16 @@ public interface WorldMap extends MoveValidator {
      * If the move is not possible, this method has no effect.
      */
     void moveAnimal(Animal animal);
-
-    /**
-     * Return true if given position on the map is occupied. Should not be
-     * confused with canMove since there might be empty positions where the animal
-     * cannot move.
-     *
-     * @param position Position to check.
-     * @return True if the position is occupied.
-     */
-    boolean isOccupied(Vector2d position);
+    void remove(Animal animal);
+    void placePlant(Plant plant);
+        /**
+         * Return true if given position on the map is occupied. Should not be
+         * confused with canMove since there might be empty positions where the animal
+         * cannot move.
+         *
+         * @param position Position to check.
+         * @return True if the position is occupied.
+         */
 
     /**
      * Return an animal at a given position.
@@ -44,4 +42,5 @@ public interface WorldMap extends MoveValidator {
      */
     Optional<WorldElement> objectAt(Vector2d position);
 
+    boolean isNotPlanted(Vector2d cell);
 }

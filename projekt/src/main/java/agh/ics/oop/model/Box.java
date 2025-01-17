@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public class Box {
     private final AnimalContainer animalGroup = new AnimalContainer();
@@ -18,10 +19,6 @@ public class Box {
         return animalGroup.getAnimals();
     }
 
-    public void setPlant(Plant plant) {
-        plantContainer.setPlant(plant);
-    }
-
     public boolean isPlanted() {
         return plantContainer.isPlanted();
     }
@@ -32,6 +29,10 @@ public class Box {
 
     public Optional<Plant> getPlant() {
         return plantContainer.getPlant();
+    }
+
+    public void setPlant(Plant plant) {
+        plantContainer.setPlant(plant);
     }
 
     public void eatPlant() {

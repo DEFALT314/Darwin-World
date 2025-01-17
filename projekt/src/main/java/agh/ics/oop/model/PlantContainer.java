@@ -5,10 +5,6 @@ import java.util.Optional;
 public class PlantContainer {
     private Plant plant;
 
-    public void setPlant(Plant plant) {
-        this.plant = plant;
-    }
-
     public boolean isPlanted() {
         return plant != null;
     }
@@ -19,6 +15,10 @@ public class PlantContainer {
 
     public Optional<Plant> getPlant() {
         return Optional.ofNullable(plant);
+    }
+
+    public void setPlant(Plant plant) {
+        this.plant = plant;
     }
 
     public int consumePlant() {

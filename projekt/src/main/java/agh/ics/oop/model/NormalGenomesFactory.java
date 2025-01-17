@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-public class NormalGenomesFactory implements  GenomesFactory{
+public class NormalGenomesFactory implements GenomesFactory {
 
     @Override
     public GenomesAbstract generateGenomes(SimulationConfig config) {

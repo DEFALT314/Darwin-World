@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class GenomesAbstract {
-    private int activeGenom;
+    protected final SimulationConfig conf;
     protected List<Integer> genomes = new ArrayList<>();
     protected Random random = new Random();
-    protected final SimulationConfig conf;
+    private int activeGenom;
+
     public GenomesAbstract(List<Integer> genomes, SimulationConfig conf) {
         this.conf = conf;
         this.genomes = genomes;
         activeGenom = 0;
     }
+
     public GenomesAbstract(SimulationConfig conf) {
         this.conf = conf;
         int n = conf.getGenomeLength();
@@ -25,30 +27,30 @@ public abstract class GenomesAbstract {
 
     public GenomesAbstract(Animal animal1, Animal animal2, SimulationConfig conf) {
         this.conf = conf;
-        Animal stronger = animal1.getInfo().getEnergy() >= animal2.getInfo().getEnergy() ? animal1  : animal2;
-        Animal weaker = animal1.getInfo().getEnergy() < animal2.getInfo().getEnergy() ? animal1  : animal2;
+        Animal stronger = animal1.getInfo().getEnergy() >= animal2.getInfo().getEnergy() ? animal1 : animal2;
+        Animal weaker = animal1.getInfo().getEnergy() < animal2.getInfo().getEnergy() ? animal1 : animal2;
         int strongerLength = (int) (conf.getGenomeLength() * ((double) stronger.getInfo().getEnergy() / (stronger.getInfo().getEnergy() + weaker.getInfo().getEnergy())));
         int weakerLength = conf.getGenomeLength() - strongerLength;
         int i = random.nextInt(2);
-        if (i==0){
-                genomes.addAll(stronger.getGenome().getGenomes().subList(0,strongerLength));
-                genomes.addAll(weaker.getGenome().getGenomes().subList(0,weakerLength));
-        }
-        else {
-            genomes.addAll(weaker.getGenome().getGenomes().subList(0,strongerLength));
-            genomes.addAll(stronger.getGenome().getGenomes().subList(0,weakerLength));
+        if (i == 0) {
+            genomes.addAll(stronger.getGenome().getGenomes().subList(0, strongerLength));
+            genomes.addAll(weaker.getGenome().getGenomes().subList(0, weakerLength));
+        } else {
+            genomes.addAll(weaker.getGenome().getGenomes().subList(0, strongerLength));
+            genomes.addAll(stronger.getGenome().getGenomes().subList(0, weakerLength));
         }
         mutate();
 
     }
 
 
-    public void mutate(){
-        int numberOfMutation  = conf.getMinMutation() + random.nextInt(conf.getMaxMutation() - conf.getMinMutation() +1);
+    public void mutate() {
+        int numberOfMutation = conf.getMinMutation() + random.nextInt(conf.getMaxMutation() - conf.getMinMutation() + 1);
         for (int i = 0; i < numberOfMutation; i++) {
             mutateOneGenome();
         }
     }
+
     public abstract void mutateOneGenome();
 
     public List<Integer> getGenomes() {

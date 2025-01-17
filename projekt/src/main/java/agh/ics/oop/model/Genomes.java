@@ -2,13 +2,15 @@ package agh.ics.oop.model;
 
 import java.util.List;
 
-public class Genomes extends GenomesAbstract{
+public class Genomes extends GenomesAbstract {
     public Genomes(List<Integer> genomes, SimulationConfig conf) {
         super(genomes, conf);
     }
+
     public Genomes(SimulationConfig conf) {
         super(conf);
     }
+
     public Genomes(Animal animal, Animal partner, SimulationConfig conf) {
         super(animal, partner, conf);
     }
@@ -16,7 +18,7 @@ public class Genomes extends GenomesAbstract{
     @Override
     public void mutateOneGenome() {
         int i = random.nextInt(conf.getGenomeLength());
-        genomes.set(i,random.nextInt(8));
+        genomes.set(i, random.nextInt(8));
     }
 
 }
