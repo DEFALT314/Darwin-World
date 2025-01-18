@@ -1,0 +1,27 @@
+package agh.ics.oop.model.Genomes;
+
+import agh.ics.oop.model.WorldElements.Animal;
+import agh.ics.oop.model.Simulation.SimulationConfig;
+
+import java.util.List;
+
+public class Genomes extends GenomesAbstract {
+    public Genomes(List<Integer> genomes, SimulationConfig conf) {
+        super(genomes, conf);
+    }
+
+    public Genomes(SimulationConfig conf) {
+        super(conf);
+    }
+
+    public Genomes(Animal animal, Animal partner, SimulationConfig conf) {
+        super(animal, partner, conf);
+    }
+
+    @Override
+    public void mutateOneGenome() {
+        int i = random.nextInt(conf.getGenomeLength());
+        genomes.set(i, random.nextInt(8));
+    }
+
+}

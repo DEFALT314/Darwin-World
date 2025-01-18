@@ -1,5 +1,12 @@
 package agh.ics.oop.model;
 
+import agh.ics.oop.model.Genomes.GenomesFactory;
+import agh.ics.oop.model.Genomes.NormalGenomesFactory;
+import agh.ics.oop.model.Map.Box;
+import agh.ics.oop.model.Simulation.SimulationConfig;
+import agh.ics.oop.model.WorldElements.Animal;
+import agh.ics.oop.model.WorldElements.Plant;
+import agh.ics.oop.model.WorldElements.Vector2d;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
