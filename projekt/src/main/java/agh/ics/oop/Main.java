@@ -13,9 +13,9 @@ public class Main {
 //                , "", 5, 100, 20, 5, 1, 4, 0, 8, "");
 //        var sim = new Simulation(new EarthMap(5, 5), conf, new NormalGenomesFactory(), true);
 //        sim.run();
-        var conf = new SimulationConfig(20, 20, "", 4, 3, 2
+        var conf = new SimulationConfig(5, 5, "", 4, 3, 2
                 , "", 5, 100, 20, 5, 1, 4, 0, 8, "");
-        var sim = new Simulation(new EarthMap(20, 20), conf, new NormalGenomesFactory(), true);
+        var sim = new Simulation(new EarthMap(5, 5), conf, new NormalGenomesFactory(), true);
         sim.run();
     }
 }

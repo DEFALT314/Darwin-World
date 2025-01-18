@@ -66,7 +66,6 @@ public class Animal implements WorldElement {
 
     public void move(Boundary boundary) {
         int activeGenom = genome.getActiveGenom();
-        System.out.println(info.getEnergy());
         info.incrementDay();
         rotateAnimal(activeGenom);
         Vector2d newPosition = localisation.add(orientation.toUnitVector());

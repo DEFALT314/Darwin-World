@@ -21,7 +21,7 @@ public class Simulation implements Runnable {
         this.worldMap = worldMap;
         this.conf = conf;
         this.genomesFactory = genomesFactory;
-        this.stats = new SimulationStats(worldMap);
+        this.stats = new SimulationStats(worldMap, conf.getMapWidth(), conf.getMapHeight());
         this.animalSpawner = new AnimalSpawner(worldMap, conf, genomesFactory);
         this.plantSpawner = new PlantSpawner(worldMap, conf);
         this.animalSpawner.spawnAnimals();
@@ -31,14 +31,12 @@ public class Simulation implements Runnable {
 
     public void run() {
         while (true) {
-            System.out.println(worldMap);
             worldMap.removeDeadAnimals();
             worldMap.moveAnimals();
             worldMap.eatPlants();
             worldMap.reproduce();
             plantSpawner.spawnPlants(conf.getPlantsPerDay());
             stats.updateStats();
-            System.out.println(stats.getStatsRecord());
             if (saveStats) {
                 statsWriter.saveToCsv(stats.getStatsRecord());
             }
