@@ -1,7 +1,0 @@
-Day,AnimalCount,PlantCount,EmptyBoxesCount,AverageEnergy,AverageLifeLength,AverageChildrenCount,MostCommonGenome
-0,6,0,0,82.50,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@d360a7e9
-1,7,0,0,70.71,0.00,0.57,agh.ics.oop.model.Genomes.Genomes@41d7f582
-2,7,0,0,71.43,0.00,0.57,agh.ics.oop.model.Genomes.Genomes@41d7f582
-3,9,0,0,54.78,0.00,0.89,agh.ics.oop.model.Genomes.Genomes@12113041
-4,9,0,0,55.11,0.00,0.89,agh.ics.oop.model.Genomes.Genomes@12113041
-5,10,0,0,49.30,0.00,1.00,agh.ics.oop.model.Genomes.Genomes@12113041

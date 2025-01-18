@@ -16,10 +16,11 @@ public class SimulationStats {
 
     public SimulationStats(WorldMap map) {
         this.map = map;
+        updateStats();
     }
 
     public void updateStats() {
-        int day = statsRecord == null ? 0 : statsRecord.day() + 1;
+        int day = statsRecord == null ?0 : statsRecord.day() + 1;
         int animalCount = map.aliveAnimalsCount();
         int plantCount = map.plantsCount();
         int emptyBoxesCount = map.notEmptyPositionsCount();
