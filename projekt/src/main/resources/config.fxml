@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="agh.ics.oop.presenter.ConfigPresenter"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+            minHeight="550.0" minWidth="850.0"
+            fx:controller="agh.ics.oop.presenter.ConfigPresenter">
+    <center>
+   <Button onAction="#onStartClicked" text="Start"/>
+    </center>
+</BorderPane>

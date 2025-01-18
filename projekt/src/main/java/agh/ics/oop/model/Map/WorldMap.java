@@ -66,4 +66,6 @@ public interface WorldMap extends MoveValidator {
     int plantsCount();
     int notEmptyPositionsCount();
     int deadAnimalsAgeSum();
+
+    Boundary getCurrentBounds();
 }

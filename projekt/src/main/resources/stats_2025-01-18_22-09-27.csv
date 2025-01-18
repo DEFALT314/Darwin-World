@@ -1,0 +1,15 @@
+Day,AnimalCount,PlantCount,EmptyBoxesCount,AverageEnergy,AverageLifeLength,AverageChildrenCount,MostCommonGenome
+1,6,4,17,12.67,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+2,6,4,15,12.67,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+3,6,5,14,11.67,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+4,6,5,14,11.17,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+5,6,5,14,11.17,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+6,6,5,14,11.17,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+7,6,5,14,10.67,0.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+8,7,4,16,8.71,0.00,0.57,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+9,6,4,15,9.67,9.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+10,6,4,15,9.17,9.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+11,6,5,14,8.67,9.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+12,6,6,13,7.67,9.00,0.33,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+13,7,5,15,6.57,9.00,0.57,agh.ics.oop.model.Genomes.Genomes@fe13d2a2
+14,7,3,15,6.43,9.00,0.57,agh.ics.oop.model.Genomes.Genomes@fe13d2a2

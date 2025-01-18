@@ -121,6 +121,10 @@ public abstract class AbstractMap implements WorldMap {
         return deadAnimals.getDeadAnimalsCount();
     }
 
+    @Override
+    public Boundary getCurrentBounds() {
+        return boundary;
+    }
 
     // do testów
     public List<Animal> getDeadAnimals() {

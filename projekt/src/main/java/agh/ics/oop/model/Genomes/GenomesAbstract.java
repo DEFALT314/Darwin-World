@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public abstract class GenomesAbstract {
     protected final SimulationConfig conf;
@@ -73,6 +74,11 @@ public abstract class GenomesAbstract {
         if (o == null || getClass() != o.getClass()) return false;
         GenomesAbstract that = (GenomesAbstract) o;
         return Objects.equals(genomes, that.genomes);
+    }
+
+    @Override
+    public String toString() {
+        return String.join("", genomes.stream().map(String::valueOf).collect(Collectors.toList()));
     }
 
     @Override

@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
             fx:controller="agh.ics.oop.presenter.SimulationPresenter">
+    <left>
+         <VBox>
+             <Label fx:id="statisticsLabel" text="Statystyki" />
+             <Label fx:id="animalInfo" text="Zwierzęta" />
+         </VBox>
+    </left>
+    <center>
+        <GridPane fx:id = "mapGrid" gridLinesVisible="true" alignment="CENTER"/>
+    </center>
+    <bottom>
+        <Button onAction="#onClick" text="Pause/Continue"/>
+    </bottom>
 </BorderPane>
