@@ -90,4 +90,10 @@ class BoxTest {
         assertEquals(animal1, child.get().getInfo().getParentOne());
         assertEquals(animal2, child.get().getInfo().getParentTwo());
     }
+
+    @Test
+    void strongestAnimalEatsPlant() {
+        Box box = new Box();
+
+    }
 }
