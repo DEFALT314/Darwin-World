@@ -1,11 +1,13 @@
 package agh.ics.oop.model.Simulation;
 
+import agh.ics.oop.model.Genomes.GenomesAbstract;
 import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.IncorrectPositionException;
 import agh.ics.oop.model.WorldElements.Vector2d;
 import agh.ics.oop.model.WorldElements.Animal;
 
+import java.util.List;
 import java.util.Random;
 
 public class AnimalSpawner {
@@ -34,4 +36,6 @@ public class AnimalSpawner {
             }
         }
     }
+
+
 }

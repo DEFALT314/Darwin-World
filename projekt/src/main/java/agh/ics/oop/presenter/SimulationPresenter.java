@@ -1,6 +1,7 @@
 package agh.ics.oop.presenter;
 
 import agh.ics.oop.SimulationApp;
+import agh.ics.oop.model.Map.Boundary;
 import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Simulation.Simulation;
 import agh.ics.oop.model.Simulation.SimulationListener;
@@ -32,10 +33,10 @@ public class SimulationPresenter implements SimulationListener {
     public Label animalInfo;
     private Simulation simulation;
     private Animal selectedAnimal;
+    private int size = 50;
     public void drawMap(){
         var worldMap = simulation.getWorldMap();
         clearGrid();
-        int size = 50;
         mapGrid.getColumnConstraints().add(new ColumnConstraints(size));
         mapGrid.getRowConstraints().add(new RowConstraints(size));
         var bounds = worldMap.getCurrentBounds();
@@ -74,6 +75,7 @@ public class SimulationPresenter implements SimulationListener {
                         GridPane.setHalignment(shape, HPos.CENTER);
                         mapGrid.add(shape, finalI - xMin + 1, yMax - finalJ + 1);
 
+
                     } else if (el instanceof Plant) {
                         Rectangle plantSquare = new Rectangle(size, size, Color.GREEN);
                         GridPane.setHalignment(plantSquare, HPos.CENTER);
@@ -83,8 +85,6 @@ public class SimulationPresenter implements SimulationListener {
                 }, ()->{
                     mapGrid.add(new Label(""), finalI - xMin + 1, yMax - finalJ + 1);
                 });
-
-
             }
         }
     }
@@ -105,6 +105,7 @@ public class SimulationPresenter implements SimulationListener {
 
     private void handleCellClick(Animal animal) {
         selectedAnimal = animal;
+        updateAnimalInfo();
     }
 
     private void clearGrid() {
@@ -125,6 +126,7 @@ public class SimulationPresenter implements SimulationListener {
             statisticsLabel.setText(stats.toString());
             drawMap();
             updateAnimalInfo();
+
         });
     }
 
@@ -136,5 +138,28 @@ public class SimulationPresenter implements SimulationListener {
 
     public void onClick(ActionEvent actionEvent) {
         simulation.pause();
+        Boundary bounds = simulation.getWorldMap().getCurrentBounds();
+        int yMax = bounds.upperRight().getY();
+        int xMin = bounds.downLeft().getX();
+        if (!simulation.isActive()){
+            List<Vector2d> preferredPlantLocations = simulation.getPreferredPlantLocations();
+            for (Vector2d location : preferredPlantLocations) {
+                Rectangle overlay = new Rectangle(size, size);
+                overlay.setFill(Color.LIGHTGREEN);
+                overlay.setMouseTransparent(true);
+                overlay.setOpacity(0.3);
+                GridPane.setHalignment(overlay, HPos.CENTER);
+                mapGrid.add(overlay, location.getX() - xMin + 1, yMax - location.getY() + 1);
+            }
+            var positions = simulation.getAnimalsWithCommonGeonome().stream().map(Animal::getPosition).toList();
+            for (Vector2d position : positions) {
+                Rectangle overlay = new Rectangle(size, size);
+                overlay.setFill(Color.AQUA);
+                overlay.setMouseTransparent(true);
+                overlay.setOpacity(0.3);
+                GridPane.setHalignment(overlay, HPos.CENTER);
+                mapGrid.add(overlay, position.getX() - xMin + 1, yMax - position.getY() + 1);
+            }
+        }
     }
 }

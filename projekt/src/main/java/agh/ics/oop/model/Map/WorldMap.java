@@ -1,5 +1,6 @@
 package agh.ics.oop.model.Map;
 
+import agh.ics.oop.model.Genomes.GenomesAbstract;
 import agh.ics.oop.model.IncorrectPositionException;
 import agh.ics.oop.model.WorldElements.Plant;
 import agh.ics.oop.model.WorldElements.Vector2d;
@@ -68,4 +69,7 @@ public interface WorldMap extends MoveValidator {
     int deadAnimalsAgeSum();
 
     Boundary getCurrentBounds();
+
+    List<Animal> getAnimalsWithGenome(GenomesAbstract genomesAbstract);
+
 }

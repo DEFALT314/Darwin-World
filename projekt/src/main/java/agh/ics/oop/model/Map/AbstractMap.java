@@ -1,6 +1,7 @@
 package agh.ics.oop.model.Map;
 
 import agh.ics.oop.model.*;
+import agh.ics.oop.model.Genomes.GenomesAbstract;
 import agh.ics.oop.model.WorldElements.Animal;
 import agh.ics.oop.model.WorldElements.Plant;
 import agh.ics.oop.model.WorldElements.Vector2d;
@@ -124,6 +125,10 @@ public abstract class AbstractMap implements WorldMap {
     @Override
     public Boundary getCurrentBounds() {
         return boundary;
+    }
+    @Override
+    public List<Animal> getAnimalsWithGenome(GenomesAbstract genomesAbstract) {
+        return boxesContainer.getAnimalsWithGenome(genomesAbstract);
     }
 
     // do testów

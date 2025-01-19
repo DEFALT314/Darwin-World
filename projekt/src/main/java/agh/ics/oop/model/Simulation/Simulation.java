@@ -5,9 +5,12 @@ import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Stats.SimulationStats;
 import agh.ics.oop.model.Stats.StatisticsWriter;
+import agh.ics.oop.model.WorldElements.Animal;
+import agh.ics.oop.model.WorldElements.Vector2d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class Simulation implements Runnable {
     private final WorldMap worldMap;
@@ -41,6 +44,12 @@ public class Simulation implements Runnable {
         for (SimulationListener listener : listeners) {
             listener.dayPassed(worldMap, stats.getStatsRecord());
         }
+    }
+    public List<Vector2d> getPreferredPlantLocations() {
+        return plantSpawner.getPreferredPlantLocations();
+    }
+    public boolean isActive() {
+        return active;
     }
 
     public void run() {
@@ -82,5 +91,9 @@ public class Simulation implements Runnable {
 
     public SimulationConfig getCofig() {
         return conf;
+    }
+
+    public List<Animal> getAnimalsWithCommonGeonome() {
+        return worldMap.getAnimalsWithGenome(stats.getStatsRecord().mostCommonGenome());
     }
 }

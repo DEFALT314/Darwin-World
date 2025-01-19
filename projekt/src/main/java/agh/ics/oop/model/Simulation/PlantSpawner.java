@@ -61,4 +61,14 @@ public class PlantSpawner {
         Vector2d cell = cells.removeLast();
         worldMap.placePlant(new Plant(cell, conf.getPlantEnergy()));
     }
+
+    public List<Vector2d> getPreferredPlantLocations() {
+        List<Vector2d> locations = new ArrayList<>();
+        for (int y = preferredZoneStart; y <= preferredZoneEnd; y++) {
+            for (int x = 0; x < conf.getMapWidth(); x++) {
+                locations.add(new Vector2d(x, y));
+            }
+        }
+        return locations;
+    }
 }
