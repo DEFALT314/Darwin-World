@@ -33,7 +33,8 @@ public class SimulationApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane rootNode = loader.load();
                 var conf = new SimulationConfig(5, 5, "", 4, 3, 2
-                , "", 5, 3, 20, 5, 1, 4, 0, 8, "");
+                , "", 5, 3, 20, 5, 1,
+                        4, "", 8, "");
         var simulation = new Simulation(new EarthMap(5, 5), conf, new NormalGenomesFactory(), true);
         SimulationPresenter controller = loader.getController();
 //        Simulation simulation = new Simulation(worldMap, simulationConfig, genomesFactory, saveToFile);
