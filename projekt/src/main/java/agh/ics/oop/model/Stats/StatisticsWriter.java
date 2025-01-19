@@ -12,7 +12,7 @@ public class StatisticsWriter {
     public StatisticsWriter(){
         LocalDateTime currentDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        csvFile = new File("src/main/resources/stats_" + currentDateTime.format(formatter) + ".csv");
+        csvFile = new File("src/main/resources/stats/stats_" + currentDateTime.format(formatter) + ".csv");
     }
 
     public void saveToCsv(SimulationStatsRecord record){
