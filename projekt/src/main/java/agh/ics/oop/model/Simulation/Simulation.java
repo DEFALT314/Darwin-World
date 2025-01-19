@@ -75,7 +75,7 @@ public class Simulation implements Runnable {
                 statsWriter.saveToCsv(stats.getStatsRecord());
             }
             try {
-                Thread.sleep(50);
+                Thread.sleep(conf.getDayLength());
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return;

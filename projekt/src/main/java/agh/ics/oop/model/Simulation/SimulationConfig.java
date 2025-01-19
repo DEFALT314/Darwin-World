@@ -17,6 +17,7 @@ public class SimulationConfig {
     private final String mutationVariant;
     private final int genomeLength;
     private final String animalBehaviorVariant;
+    private int dayLength;
 
     public SimulationConfig(int mapWidth, int mapHeight, String mapVariant, int startingPlantCount,
                             int plantEnergy, int plantsPerDay, String plantGrowthVariant,
@@ -39,7 +40,33 @@ public class SimulationConfig {
         this.mutationVariant = mutationVariant;
         this.genomeLength = genomeLength;
         this.animalBehaviorVariant = animalBehaviorVariant;
+        this.dayLength = 1000;
     }
+    public SimulationConfig(int mapWidth, int mapHeight, String mapVariant, int startingPlantCount,
+                            int plantEnergy, int plantsPerDay, String plantGrowthVariant,
+                            int startingAnimalCount, int startingAnimalEnergy, int energyToBeFull,
+                            int energyToReproduce, int minMutation, int maxMutation,
+                            String mutationVariant, int genomeLength, String animalBehaviorVariant, int dayLength) {
+        this.mapWidth = mapWidth;
+        this.mapHeight = mapHeight;
+        this.mapVariant = mapVariant;
+        this.startingPlantCount = startingPlantCount;
+        this.plantEnergy = plantEnergy;
+        this.plantsPerDay = plantsPerDay;
+        this.plantGrowthVariant = plantGrowthVariant;
+        this.startingAnimalCount = startingAnimalCount;
+        this.startingAnimalEnergy = startingAnimalEnergy;
+        this.energyToBeFull = energyToBeFull;
+        this.energyToReproduce = energyToReproduce;
+        this.minMutation = minMutation;
+        this.maxMutation = maxMutation;
+        this.mutationVariant = mutationVariant;
+        this.genomeLength = genomeLength;
+        this.animalBehaviorVariant = animalBehaviorVariant;
+        this.dayLength = dayLength;
+    }
+
+
 
 
     public int getMapWidth() {
@@ -68,6 +95,10 @@ public class SimulationConfig {
 
     public String getPlantGrowthVariant() {
         return plantGrowthVariant;
+    }
+
+    public int getDayLength() {
+        return dayLength;
     }
 
     public int getStartingAnimalCount() {
