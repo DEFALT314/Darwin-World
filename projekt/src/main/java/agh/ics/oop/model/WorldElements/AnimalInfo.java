@@ -1,5 +1,7 @@
 package agh.ics.oop.model.WorldElements;
 
+import agh.ics.oop.model.Genomes.GenomesAbstract;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +15,13 @@ public class AnimalInfo {
     private boolean isDead = false;
     private int plantEaten = 0;
     private int day;
+    private final GenomesAbstract genome;
+    private final int energyToBeFull;
+
+    public AnimalInfo(GenomesAbstract genome, int energyToBeFull) {
+        this.genome = genome;
+        this.energyToBeFull = energyToBeFull;
+    }
 
     public int getEnergy() {
         return energy;
@@ -141,4 +150,20 @@ public class AnimalInfo {
     public void incrementDay() {
         day++;
     }
-}
+
+    @Override
+    public String toString() {
+            StringBuilder info = new StringBuilder();
+            info.append("Genome: ").append(genome).append("\n");
+            info.append("Active Gene: ").append(genome.getActiveGenome()).append("\n");
+            info.append("Energy: ").append(getEnergy()).append("\n");
+            info.append("Plants Eaten: ").append(plantEaten).append("\n");
+            info.append("Children: ").append(childCount).append("\n");
+            info.append("Descendants: ").append(descendantCount).append("\n");
+            info.append("Age: ").append(day).append("\n");
+            if (isDead()) {
+                info.append("Died on Day: ").append(deathDay).append("\n");
+            }
+            return info.toString();
+        }
+    }

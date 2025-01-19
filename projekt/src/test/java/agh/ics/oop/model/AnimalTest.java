@@ -30,7 +30,7 @@ class AnimalTest {
     @Test
     void addEnergyTest() {
         Animal animal = new Animal(new Vector2d(2, 2), conf, genomesFactory);
-        animal.addEnergy(5);
+        animal.eatPlant(5);
         assertEquals(25, animal.getEnergy());
     }
 
@@ -75,7 +75,7 @@ class AnimalTest {
     void notEnoughEnergyToReproduce() {
         Animal animal1 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         Animal animal2 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
-        animal1.addEnergy(5);
+        animal1.eatPlant(5);
         assertEquals(Optional.empty(), animal1.reproduce(animal2));
         assertEquals(Optional.empty(), animal2.reproduce(animal1));
     }
@@ -84,8 +84,8 @@ class AnimalTest {
     void reproduceTestRandomGenomes() {
         Animal animal1 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         Animal animal2 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
-        animal1.addEnergy(5);
-        animal2.addEnergy(5);
+        animal1.eatPlant(5);
+        animal2.eatPlant(5);
         Optional<Animal> child = animal1.reproduce(animal2);
         assertTrue(child.isPresent());
         assertEquals(animal1, child.get().getInfo().getParentOne());
@@ -99,11 +99,11 @@ class AnimalTest {
         Animal animal1 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         Animal animal2 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
         Animal animal3 = new Animal(new Vector2d(2, 2), conf, genomesFactory);
-        animal1.addEnergy(10);
-        animal2.addEnergy(10);
-        animal3.addEnergy(10);
+        animal1.eatPlant(10);
+        animal2.eatPlant(10);
+        animal3.eatPlant(10);
         Optional<Animal> child = animal1.reproduce(animal2);
-        child.get().addEnergy(30);
+        child.get().eatPlant(30);
         Optional<Animal> child2 = animal3.reproduce(child.get());
         assertEquals(2, animal1.getInfo().getDescendantCount());
         assertEquals(2, animal2.getInfo().getDescendantCount());

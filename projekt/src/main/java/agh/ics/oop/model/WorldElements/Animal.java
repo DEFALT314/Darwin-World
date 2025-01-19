@@ -13,7 +13,7 @@ public class Animal implements WorldElement {
 
     private static final int GENOME_DIRECTIONS_COUNT = 8;
     private final GenomesAbstract genome;
-    private final AnimalInfo info = new AnimalInfo();
+    private final AnimalInfo info;
     private final SimulationConfig conf;
     private final GenomesFactory genomesFactory;
     private MapDirection orientation;
@@ -25,6 +25,7 @@ public class Animal implements WorldElement {
         this.orientation = direction;
         this.localisation = localisation;
         this.genome = genomes;
+        this.info = new AnimalInfo(genomes, config.getEnergyToBeFull());
         initializeEnergy();
     }
 
@@ -38,6 +39,7 @@ public class Animal implements WorldElement {
         this.localisation = localisation;
         this.genome = genomes;
         this.orientation = initializeRandomDirection();
+        this.info = new AnimalInfo(genomes, config.getEnergyToBeFull());
         info.setEnergy(energy);
         info.setParentOne(parentOne);
         info.setParentTwo(parentTwo);
@@ -65,7 +67,7 @@ public class Animal implements WorldElement {
     }
 
     public void move(Boundary boundary) {
-        int activeGenom = genome.getActiveGenom();
+        int activeGenom = genome.getActiveGenomAndDeactivate();
         info.incrementDay();
         rotateAnimal(activeGenom);
         Vector2d newPosition = localisation.add(orientation.toUnitVector());
@@ -150,7 +152,8 @@ public class Animal implements WorldElement {
         info.subtractEnergy(i);
     }
 
-    public void addEnergy(int i) {
+    public void eatPlant(int i) {
+        info.addPlantEaten();
         info.addEnergy(i);
     }
 

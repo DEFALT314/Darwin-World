@@ -46,6 +46,7 @@ public class Simulation implements Runnable {
     public void run() {
         while (running) {
             if( !active){
+                System.out.println("Simulation paused");
                 continue;
             }
             worldMap.removeDeadAnimals();

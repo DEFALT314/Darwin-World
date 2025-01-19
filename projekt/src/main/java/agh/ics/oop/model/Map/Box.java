@@ -43,7 +43,7 @@ public class Box {
         Optional<Animal> strongestAnimal = animalGroup.getStrongestAnimal();
         strongestAnimal.ifPresent(animal -> {
             if (!animal.isDead()) {
-                animal.addEnergy(plantBox.consumePlant());
+                animal.eatPlant(plantBox.consumePlant());
             }
         });
     }

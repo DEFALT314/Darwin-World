@@ -13,13 +13,16 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class SimulationPresenter implements SimulationListener {
     public Label statisticsLabel;
     public Label animalInfo;
     private Simulation simulation;
-
+    private Animal selectedAnimal;
     public void drawMap(){
         var worldMap = simulation.getWorldMap();
         clearGrid();
@@ -62,34 +65,46 @@ public class SimulationPresenter implements SimulationListener {
         for (int i = xMin; i <= xMax; i++){
             for (int j = yMax; j >= yMin; j--){
                 Vector2d p  = new Vector2d(i, j);
-                int finalI = i;
                 int finalJ = j;
+                int finalI = i;
                 worldMap.objectAt(p).ifPresentOrElse((WorldElement el) -> {
                     if (el instanceof Animal) {
-                        Animal animal = (Animal) el;
-                        double energyRatio = (double) animal.getEnergy() / simulation.getCofig().getEnergyToBeFull();
-                        Color animalColor;
-                        if (animal.isDead()) {
-                            animalColor = Color.BLACK;
-                        }
-                        else {
-                            animalColor = Color.color(Math.max(0, 1.0 - energyRatio), 0, 0);
-                        }
-                        Circle animalCircle = new Circle(size / 2.0, animalColor);
-                        GridPane.setHalignment(animalCircle, HPos.CENTER);
-                        mapGrid.add(animalCircle, finalI - xMin + 1, yMax - finalJ + 1);
+                        Circle shape = getCircle((Animal) el, size);
+                        shape.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> handleCellClick((Animal) el));
+                        GridPane.setHalignment(shape, HPos.CENTER);
+                        mapGrid.add(shape, finalI - xMin + 1, yMax - finalJ + 1);
+
                     } else if (el instanceof Plant) {
                         Rectangle plantSquare = new Rectangle(size, size, Color.GREEN);
                         GridPane.setHalignment(plantSquare, HPos.CENTER);
                         mapGrid.add(plantSquare, finalI - xMin + 1, yMax - finalJ + 1);
                     }
-                }, () -> {
-                    Label emptyLabel = new Label(" ");
-                    GridPane.setHalignment(emptyLabel, HPos.CENTER);
-                    mapGrid.add(emptyLabel, finalI - xMin + 1, yMax - finalJ+ 1);
+
+                }, ()->{
+                    mapGrid.add(new Label(""), finalI - xMin + 1, yMax - finalJ + 1);
                 });
+
+
             }
         }
+    }
+
+    private Circle getCircle(Animal el, int size) {
+        Animal animal = el;
+        double energyRatio = (double) animal.getEnergy() / simulation.getCofig().getEnergyToBeFull();
+        Color animalColor;
+        if (animal.isDead()) {
+            animalColor = Color.BLACK;
+        }
+        else {
+            animalColor = Color.color(Math.max(0, 1.0 - energyRatio), 0, 0);
+        }
+        Circle animalCircle = new Circle(size / 2.0, animalColor);
+        return animalCircle;
+    }
+
+    private void handleCellClick(Animal animal) {
+        selectedAnimal = animal;
     }
 
     private void clearGrid() {
@@ -109,7 +124,14 @@ public class SimulationPresenter implements SimulationListener {
         Platform.runLater(() -> {
             statisticsLabel.setText(stats.toString());
             drawMap();
+            updateAnimalInfo();
         });
+    }
+
+    private void updateAnimalInfo() {
+        if (selectedAnimal != null) {
+            animalInfo.setText(selectedAnimal.getInfo().toString());
+        }
     }
 
     public void onClick(ActionEvent actionEvent) {

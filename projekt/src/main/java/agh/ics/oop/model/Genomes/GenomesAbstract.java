@@ -62,9 +62,13 @@ public abstract class GenomesAbstract {
         return genomes;
     }
 
-    public int getActiveGenom() {
+    public int getActiveGenomAndDeactivate() {
         int oldGenom = activeGenom;
         activeGenom = (activeGenom + 1) % conf.getGenomeLength();
+        return genomes.get(oldGenom);
+    }
+    public int getActiveGenome() {
+        int oldGenom = activeGenom;
         return genomes.get(oldGenom);
     }
 
@@ -78,7 +82,8 @@ public abstract class GenomesAbstract {
 
     @Override
     public String toString() {
-        return String.join("", genomes.stream().map(String::valueOf).collect(Collectors.toList()));
+        return genomes.toString();
+//        return String.join("", genomes.stream().map(String::valueOf).collect(Collectors.toList()));
     }
 
     @Override
