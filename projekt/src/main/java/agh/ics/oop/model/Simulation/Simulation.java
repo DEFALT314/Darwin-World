@@ -57,7 +57,7 @@ public class Simulation implements Runnable {
 
             if( !active){
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     return;
@@ -75,7 +75,7 @@ public class Simulation implements Runnable {
                 statsWriter.saveToCsv(stats.getStatsRecord());
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return;
