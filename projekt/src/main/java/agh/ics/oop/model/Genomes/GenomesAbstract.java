@@ -82,8 +82,8 @@ public abstract class GenomesAbstract {
 
     @Override
     public String toString() {
-        return genomes.toString();
-//        return String.join("", genomes.stream().map(String::valueOf).collect(Collectors.toList()));
+//        return genomes.toString();
+        return String.join("", genomes.stream().map(String::valueOf).collect(Collectors.toList()));
     }
 
     @Override

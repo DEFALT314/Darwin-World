@@ -11,10 +11,6 @@ public class PlantBox {
         return plant != null;
     }
 
-    public boolean isEmpty() {
-        return plant == null;
-    }
-
     public Optional<Plant> getPlant() {
         return Optional.ofNullable(plant);
     }

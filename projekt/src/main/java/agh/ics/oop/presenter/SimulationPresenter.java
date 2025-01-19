@@ -35,8 +35,6 @@ public class SimulationPresenter implements SimulationListener {
     private Animal selectedAnimal;
     private int size = 20;
 
-
-
     public void drawMap() {
         var worldMap = simulation.getWorldMap();
         clearGrid();
@@ -96,7 +94,7 @@ public class SimulationPresenter implements SimulationListener {
         double energyRatio = (double) animal.getEnergy() / simulation.getCofig().getEnergyToBeFull();
         Color animalColor;
         if (animal.isDead()) {
-            animalColor = Color.BLACK;
+            animalColor = Color.BROWN;
         } else {
             animalColor = Color.color(Math.max(0, 1.0 - energyRatio), 0, 0);
         }
@@ -154,9 +152,9 @@ public class SimulationPresenter implements SimulationListener {
             var positions = simulation.getAnimalsWithCommonGeonome().stream().map(Animal::getPosition).toList();
             for (Vector2d position : positions) {
                 Rectangle overlay = new Rectangle(size, size);
-                overlay.setFill(Color.AQUA);
+                overlay.setFill(Color.VIOLET);
                 overlay.setMouseTransparent(true);
-                overlay.setOpacity(0.3);
+                overlay.setOpacity(0.5);
                 GridPane.setHalignment(overlay, HPos.CENTER);
                 mapGrid.add(overlay, position.getX() - xMin + 1, yMax - position.getY() + 1);
             }

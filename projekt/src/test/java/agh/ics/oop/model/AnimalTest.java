@@ -19,7 +19,7 @@ class AnimalTest {
     SimulationConfig conf = new SimulationConfig(4, 4, "ziemia",
             0, 0, 0, "0", 0,
             20, 30, 25, 2, 5,
-            0, 4, "0");
+            "", 4, "0");
     GenomesFactory genomesFactory = new NormalGenomesFactory();
     @Test
     void startingEnergyTest() {

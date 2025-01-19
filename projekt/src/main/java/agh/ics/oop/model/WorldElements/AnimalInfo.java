@@ -28,8 +28,8 @@ public class AnimalInfo {
     }
 
     public void setEnergy(int energy) {
-        this.energy = energy;
-        if (this.energy < 0) {
+        this.energy = Math.min(energy, energyToBeFull);
+        if (this.energy <= 0) {
             markAsDead();
         }
     }
@@ -37,7 +37,7 @@ public class AnimalInfo {
     public void addEnergy(int energy) {
         this.energy += energy;
         this.energy = Math.min(this.energy, energyToBeFull);
-        if (this.energy < 0) {
+        if (this.energy <= 0) {
             markAsDead();
         }
     }
@@ -45,7 +45,7 @@ public class AnimalInfo {
     public void subtractEnergy(int energy) {
 
         this.energy -= energy;
-        if (this.energy < 0) {
+        if (this.energy <= 0) {
             markAsDead();
         }
     }
@@ -56,10 +56,6 @@ public class AnimalInfo {
 
     public void addPlantEaten() {
         this.plantEaten += 1;
-    }
-
-    public int getChildCount() {
-        return childCount;
     }
 
     public void incrementDescendantAndChildCount() {
@@ -97,40 +93,15 @@ public class AnimalInfo {
         return isDead;
     }
 
-    public void setDead(boolean dead) {
-        this.isDead = dead;
-    }
-
     public void markAsDead() {
         this.isDead = true;
         this.deathDay = day;
-    }
-
-    public void markAsDead(int deathDay) {
-        this.isDead = true;
-        this.deathDay = deathDay;
     }
 
     public int getDay() {
         return day;
     }
 
-    public int getDeathDay() {
-        return deathDay;
-    }
-
-    public void setDeathDay(int deathDay) {
-        this.isDead = true;
-        this.deathDay = deathDay;
-    }
-
-    public int getPlantEaten() {
-        return plantEaten;
-    }
-
-    public void incrementPlantEaten() {
-        plantEaten++;
-    }
 
     public Animal getParentOne() {
         return parentOne;

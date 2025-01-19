@@ -33,10 +33,10 @@ public class SimulationApp extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("simulation.fxml"));
         BorderPane rootNode = loader.load();
-                var conf = new SimulationConfig(10, 10, "", 4, 3, 1
-                , "", 5, 10, 20, 5, 1,
+                var conf = new SimulationConfig(10, 10, "", 4, 10, 1
+                , "", 5, 10, 20, 10, 1,
                         4, "", 8, "");
-        var simulation = new Simulation(new IceMap(10, 10), conf, new NormalGenomesFactory(), true);
+        var simulation = new Simulation(new EarthMap(10, 10), conf, new NormalGenomesFactory(), true);
         SimulationPresenter controller = loader.getController();
 //        Simulation simulation = new Simulation(worldMap, simulationConfig, genomesFactory, saveToFile);
         simulation.addListener(controller);

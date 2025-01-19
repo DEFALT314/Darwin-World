@@ -11,12 +11,10 @@ import java.util.stream.Collectors;
 
 public class SimulationStats {
     private final WorldMap map;
-    private final int allBoxesCount;
     private final Map<GenomesAbstract, Integer> genomesCounter = new HashMap<>();
     private SimulationStatsRecord statsRecord;
 
-    public SimulationStats(WorldMap map, int mapWidth, int mapHeight) {
-        this.allBoxesCount = mapHeight * mapWidth;
+    public SimulationStats(WorldMap map) {
         this.map = map;
         updateStats();
     }
@@ -25,7 +23,7 @@ public class SimulationStats {
         int day = statsRecord == null ?0 : statsRecord.day() + 1;
         int animalCount = map.aliveAnimalsCount();
         int plantCount = map.plantsCount();
-        int emptyBoxesCount =allBoxesCount- map.notEmptyPositionsCount();
+        int emptyBoxesCount = map.emptyPositionsCount();
         double averageLifeLength = getAverageDeadAnimalAge(map.deadAnimalsCount(), map.deadAnimalsAgeSum());
         GenomesAbstract mostCommonGenome = calculateMostCommonGenome();
         double averageEnergy = map.getAliveAnimals().stream().mapToInt(Animal::getEnergy).average().orElse(0);

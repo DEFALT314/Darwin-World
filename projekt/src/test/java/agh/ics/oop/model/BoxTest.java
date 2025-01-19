@@ -17,7 +17,7 @@ class BoxTest {
     SimulationConfig conf = new SimulationConfig(4, 4, "ziemia",
             0, 0, 0, "0", 0,
             20, 30, 20, 2, 5,
-            0, 4, "0");
+            "", 4, "0");
     GenomesFactory factory = new NormalGenomesFactory();
 
     @Test

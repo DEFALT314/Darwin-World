@@ -4,8 +4,8 @@ import agh.ics.oop.model.Genomes.GenomesAbstract;
 import agh.ics.oop.model.IncorrectPositionException;
 import agh.ics.oop.model.WorldElements.Plant;
 import agh.ics.oop.model.WorldElements.Vector2d;
-import agh.ics.oop.model.WorldElements.WorldElement;
 import agh.ics.oop.model.WorldElements.Animal;
+import agh.ics.oop.model.WorldElements.WorldElement;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,16 +42,10 @@ public interface WorldMap extends MoveValidator {
          * @return True if the position is occupied.
          */
 
-    /**
-     * Return an animal at a given position.
-     *
-     * @param position The position of the animal.
-     * @return animal or null if the position is not occupied.
-     */
-    Optional<WorldElement> objectAt(Vector2d position);
 
     boolean isPlanted(Vector2d cell);
 
+    Optional<WorldElement> objectAt(Vector2d pos);
     void removeDeadAnimals();
 
     void moveAnimals();
@@ -65,7 +59,7 @@ public interface WorldMap extends MoveValidator {
     int aliveAnimalsCount();
     int deadAnimalsCount();
     int plantsCount();
-    int notEmptyPositionsCount();
+    int emptyPositionsCount();
     int deadAnimalsAgeSum();
 
     Boundary getCurrentBounds();

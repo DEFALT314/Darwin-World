@@ -31,7 +31,7 @@ public class Box {
     }
 
     public boolean isEmpty() {
-        return animalGroup.isEmpty() && plantBox.isEmpty();
+        return animalGroup.isEmpty() && !plantBox.isPlanted();
     }
 
     public Optional<Plant> getPlant() {

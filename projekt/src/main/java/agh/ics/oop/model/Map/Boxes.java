@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+//struktura która zarząca polami tworząc i usuwając dynamicznie
 public class Boxes {
     private final Map<Vector2d, Box> boxes;
 
@@ -20,8 +20,8 @@ public class Boxes {
     public boolean isPlanted(Vector2d location) {
         return boxes.containsKey(location) && boxes.get(location).isPlanted();
     }
-    public Map<Vector2d, Box> getBoxes() {
-        return boxes;
+    public List<Box> getBoxes() {
+        return boxes.values().stream().toList();
     }
     public Optional<Animal> strongestAnimalAt(Vector2d position) {
         if (!boxes.containsKey(position)) {
@@ -29,29 +29,22 @@ public class Boxes {
         }
         return boxes.get(position).getStrongestAnimal();
     }
-    public Optional<WorldElement> objectAt(Vector2d position) {
-        if (!boxes.containsKey(position)) {
+
+    public Optional<WorldElement> strongestObjectAt(Vector2d pos){
+        if (!boxes.containsKey(pos)){
             return Optional.empty();
         }
-        Optional<Animal> first = boxes.get(position).getAnimals().stream().findFirst();
-        if (first.isPresent()) {
-            return Optional.of(first.get());
-        }
-        Optional<Plant> plant = boxes.get(position).getPlant();
-        if (plant.isPresent()) {
+        var animal = strongestAnimalAt(pos);
+        var plant = boxes.get(pos).getPlant();
+        if( animal.isPresent()){
+            return Optional.of(animal.get());
+        } else if (plant.isPresent()){
             return Optional.of(plant.get());
         }
-        return Optional.empty();
-    }
-    public List<Vector2d> getEmptyPositions() {
-        return boxes.entrySet().stream()
-                .filter(entry -> entry.getValue().isEmpty())
-                .map(Map.Entry::getKey)
-                .toList();
-    }
+        else {
+            return Optional.empty();
+        }
 
-    public List<Box> getBoxesWithPlants() {
-        return boxes.values().stream().filter(Box::isPlanted).toList();
     }
 
     public void addAnimal(Animal animal) {
@@ -70,9 +63,12 @@ public class Boxes {
         }
     }
 
-
     private void addBoxIfDontExist(Vector2d position) {
         boxes.computeIfAbsent(position, pos -> new Box());
+    }
+
+    public List<Box> getBoxesWithPlants() {
+        return boxes.values().stream().filter(Box::isPlanted).toList();
     }
 
     public List<Animal> getDeadAnimals() {
@@ -88,6 +84,7 @@ public class Boxes {
                 .flatMap(box -> box.getAnimals().stream())
                 .toList();
     }
+
 
     public void addPlant(Plant plant) {
         addBoxIfDontExist(plant.getPosition());

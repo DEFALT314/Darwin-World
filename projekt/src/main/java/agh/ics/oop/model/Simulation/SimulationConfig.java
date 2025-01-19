@@ -1,24 +1,23 @@
 package agh.ics.oop.model.Simulation;
 
 public class SimulationConfig {
-    private final int mapWidth;                  // szerokość mapy
-    private final int mapHeight;                 // wysokość mapy
-    private final String mapVariant;             // wariant mapy (np. prostokątna, toroidalna, itp.)
-    private final int startingPlantCount;        // startowa liczba roślin
-    private final int plantEnergy;               // energia zapewniana przez zjedzenie jednej rośliny
-    private final int plantsPerDay;              // liczba roślin wyrastających każdego dnia
-    private final String plantGrowthVariant;     // wariant wzrostu roślin (np. losowy, określony)
-    private final int startingAnimalCount;       // startowa liczba zwierzaków
-    private final int startingAnimalEnergy;      // startowa energia zwierzaków
-    private final int energyToBeFull;            // energia konieczna, by uznać zwierzaka za najedzonego
-    private final int energyToReproduce;         // energia rodziców zużywana na stworzenie potomka
-    private final int minMutation;               // minimalna liczba mutacji u potomków
-    private final int maxMutation;               // maksymalna liczba mutacji u potomków
-    private final String mutationVariant;        // wariant mutacji (np. losowa, systematyczna)
-    private final int genomeLength;              // długość genomu zwierzaków
-    private final String animalBehaviorVariant;  // wariant zachowania zwierzaków (np. agresywne, pasywne)
+    private final int mapWidth;
+    private final int mapHeight;
+    private final String mapVariant;
+    private final int startingPlantCount;
+    private final int plantEnergy;
+    private final int plantsPerDay;
+    private final String plantGrowthVariant;
+    private final int startingAnimalCount;
+    private final int startingAnimalEnergy;
+    private final int energyToBeFull;
+    private final int energyToReproduce;
+    private final int minMutation;
+    private final int maxMutation;
+    private final String mutationVariant;
+    private final int genomeLength;
+    private final String animalBehaviorVariant;
 
-    // Konstruktor klasy, który inicjalizuje wszystkie parametry symulacji
     public SimulationConfig(int mapWidth, int mapHeight, String mapVariant, int startingPlantCount,
                             int plantEnergy, int plantsPerDay, String plantGrowthVariant,
                             int startingAnimalCount, int startingAnimalEnergy, int energyToBeFull,
@@ -42,7 +41,6 @@ public class SimulationConfig {
         this.animalBehaviorVariant = animalBehaviorVariant;
     }
 
-    // Gettery do odczytu wartości (bez setterów)
 
     public int getMapWidth() {
         return mapWidth;

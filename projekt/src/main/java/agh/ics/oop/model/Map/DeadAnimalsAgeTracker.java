@@ -6,7 +6,7 @@ public class DeadAnimalsAgeTracker {
     private int deadAnimalsAgeSum = 0;
     private int deadAnimalsCount = 0;
 
-    public void addDeadAnimalAge(Animal animal) {
+    public void addDeadAnimal(Animal animal) {
         deadAnimalsAgeSum += animal.getAge();
         deadAnimalsCount++;
     }

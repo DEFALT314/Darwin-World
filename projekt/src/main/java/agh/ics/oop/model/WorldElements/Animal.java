@@ -58,10 +58,6 @@ public class Animal implements WorldElement {
         return orientation.toString();
     }
 
-    public boolean isAt(Vector2d position) {
-        return localisation.equals(position);
-    }
-
     public AnimalInfo getInfo() {
         return info;
     }
@@ -71,7 +67,6 @@ public class Animal implements WorldElement {
         info.incrementDay();
         rotateAnimal(activeGenom);
         Vector2d newPosition = localisation.add(orientation.toUnitVector());
-
 
         if (boundary.downLeft().getY() > newPosition.getY() || newPosition.getY() > boundary.upperRight().getY()) {
             rotate180();
@@ -93,11 +88,8 @@ public class Animal implements WorldElement {
         if (info.getEnergy() < conf.getEnergyToReproduce() || partnerInfo.getEnergy() < conf.getEnergyToReproduce()) {
             return Optional.empty();
         }
-
-
         info.incrementDescendantAndChildCount();
         partnerInfo.incrementDescendantAndChildCount();
-
         GenomesAbstract childGenomes = genomesFactory.generateGenomes(this, partner, conf);
         info.subtractEnergy(conf.getEnergyToReproduce());
         partnerInfo.subtractEnergy(conf.getEnergyToReproduce());
@@ -155,10 +147,6 @@ public class Animal implements WorldElement {
     public void eatPlant(int i) {
         info.addPlantEaten();
         info.addEnergy(i);
-    }
-
-    public void markAsDead() {
-        info.markAsDead();
     }
 
     public boolean isDead() {

@@ -6,19 +6,21 @@ import agh.ics.oop.model.WorldElements.Animal;
 import agh.ics.oop.model.WorldElements.Plant;
 import agh.ics.oop.model.WorldElements.Vector2d;
 import agh.ics.oop.model.WorldElements.WorldElement;
-import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractMap implements WorldMap {
     private final Boundary boundary;
-    private final MapVisualizer mapVisualizer = new MapVisualizer(this);
     private final Boxes boxesContainer = new Boxes();
     private final DeadAnimalsAgeTracker deadAnimals = new DeadAnimalsAgeTracker();
+    private final int width;
+    private final int height;
 
     public AbstractMap(int width, int height) {
         this.boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width - 1, height - 1));
+        this.height = height;
+        this.width = width;
     }
 
     public void eatPlants() {
@@ -34,7 +36,7 @@ public abstract class AbstractMap implements WorldMap {
     }
 
     public void reproduce() {
-        boxesContainer.getBoxes().values().forEach(Box::reproduce);
+        boxesContainer.getBoxes().forEach(Box::reproduce);
     }
 
     @Override
@@ -45,9 +47,7 @@ public abstract class AbstractMap implements WorldMap {
             throw new IncorrectPositionException(animal.getPosition());
         }
     }
-    public DeadAnimalsAgeTracker getDeadAnimalsAgeTracker() {
-        return deadAnimals;
-    }
+
     @Override
     public void moveAnimal(Animal animal) {
         boxesContainer.removeAnimal(animal);
@@ -55,7 +55,7 @@ public abstract class AbstractMap implements WorldMap {
         animal.move(boundary);
         boxesContainer.addAnimal(animal);
         if( animal.isDead()){
-            deadAnimals.addDeadAnimalAge(animal);
+            deadAnimals.addDeadAnimal(animal);
         }
     }
 
@@ -79,9 +79,7 @@ public abstract class AbstractMap implements WorldMap {
         return boxesContainer.isPlanted(location);
     }
 
-    public List<Vector2d> getEmptyPositions() {
-        return boxesContainer.getEmptyPositions();
-    }
+
 
     private List<Box> getBoxesWithPlants() {
         return boxesContainer.getBoxesWithPlants();
@@ -97,15 +95,8 @@ public abstract class AbstractMap implements WorldMap {
             boxesContainer.addPlant(plant);
         }
     }
-    @Override
-    public String toString() {
-        return mapVisualizer.draw(boundary.downLeft(), boundary.upperRight());
-    }
 
-    @Override
-    public Optional<WorldElement> objectAt(Vector2d position) {
-        return boxesContainer.objectAt(position);
-    }
+
     @Override
     public int aliveAnimalsCount() {
         return boxesContainer.getAliveAnimals().size();
@@ -115,9 +106,15 @@ public abstract class AbstractMap implements WorldMap {
     public int plantsCount() {
         return getBoxesWithPlants().size();
     }
-    @Override public int notEmptyPositionsCount() {
-        return boxesContainer.size();
+    @Override public int emptyPositionsCount() {
+        return width*height- boxesContainer.size();
     }
+
+    @Override
+    public Optional<WorldElement> objectAt(Vector2d pos) {
+        return  boxesContainer.strongestObjectAt(pos);
+    }
+
     @Override
     public int deadAnimalsAgeSum() {
         return deadAnimals.getDeadAnimalsAgeSum();
