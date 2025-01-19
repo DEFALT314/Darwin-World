@@ -1,0 +1,7 @@
+Day,AnimalCount,PlantCount,EmptyBoxesCount,AverageEnergy,AverageLifeLength,AverageChildrenCount,MostCommonGenome
+1,5,5,90,5.40,0.00,0.00,[5, 2, 2, 0, 2, 5, 4, 7]
+2,3,6,89,2.33,2.00,0.00,[5, 2, 2, 0, 2, 5, 4, 7]
+3,1,7,90,2.00,2.50,0.00,[5, 2, 2, 0, 2, 5, 4, 7]
+4,0,8,91,0.00,2.80,0.00,null
+5,0,9,91,0.00,2.80,0.00,null
+6,0,10,90,0.00,2.80,0.00,null
