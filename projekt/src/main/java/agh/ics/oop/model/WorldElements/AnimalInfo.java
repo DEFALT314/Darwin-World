@@ -155,7 +155,8 @@ public class AnimalInfo {
     public String toString() {
             StringBuilder info = new StringBuilder();
             info.append("Genome: ").append(genome).append("\n");
-            info.append("Active Gene: ").append(genome.getActiveGenome()).append("\n");
+            info.append("Active Gene: ").append(genome.getActiveGenome()
+            ).append("\n");
             info.append("Energy: ").append(getEnergy()).append("\n");
             info.append("Plants Eaten: ").append(plantEaten).append("\n");
             info.append("Children: ").append(childCount).append("\n");
