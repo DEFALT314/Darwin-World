@@ -41,7 +41,6 @@ public class SimulationPresenter implements SimulationListener {
         double cellWidth = mapGrid.getWidth() / (worldMap.getCurrentBounds().upperRight().getX() - worldMap.getCurrentBounds().downLeft().getX() + 2);
         double cellHeight = mapGrid.getHeight() / (worldMap.getCurrentBounds().upperRight().getY() - worldMap.getCurrentBounds().downLeft().getY() + 2);
         size = (int) Math.min(cellWidth, cellHeight);
-
         mapGrid.getColumnConstraints().add(new ColumnConstraints(size));
         mapGrid.getRowConstraints().add(new RowConstraints(size));
         var bounds = worldMap.getCurrentBounds();
@@ -135,10 +134,10 @@ public class SimulationPresenter implements SimulationListener {
     }
 
     public void onClick(ActionEvent actionEvent) {
-        simulation.pause();
         Boundary bounds = simulation.getWorldMap().getCurrentBounds();
         int yMax = bounds.upperRight().getY();
         int xMin = bounds.downLeft().getX();
+        simulation.pause();
         if (!simulation.isActive()) {
             List<Vector2d> preferredPlantLocations = simulation.getPreferredPlantLocations();
             for (Vector2d location : preferredPlantLocations) {
@@ -159,5 +158,6 @@ public class SimulationPresenter implements SimulationListener {
                 mapGrid.add(overlay, position.getX() - xMin + 1, yMax - position.getY() + 1);
             }
         }
+
     }
 }

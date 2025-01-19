@@ -54,7 +54,14 @@ public class Simulation implements Runnable {
 
     public void run() {
         while (running) {
+
             if( !active){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    return;
+                }
                 continue;
             }
             worldMap.removeDeadAnimals();
@@ -68,7 +75,7 @@ public class Simulation implements Runnable {
                 statsWriter.saveToCsv(stats.getStatsRecord());
             }
             try {
-                Thread.sleep(50);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 return;
@@ -79,7 +86,7 @@ public class Simulation implements Runnable {
     public void stop(){
         running = false;
     }
-    public void pause(){
+    public synchronized void pause(){
         active = !active;
     }
 

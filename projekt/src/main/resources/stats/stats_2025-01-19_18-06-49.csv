@@ -1,0 +1,7 @@
+Day,AnimalCount,PlantCount,EmptyBoxesCount,AverageEnergy,AverageLifeLength,AverageChildrenCount,MostCommonGenome
+1,126,2,36,792.88,0.00,0.41,04227554
+2,160,1,27,623.63,0.00,0.75,73374503
+3,205,1,21,486.00,0.00,1.02,73374503
+4,254,2,13,391.44,0.00,1.21,74152353
+5,309,1,7,321.01,0.00,1.35,74152353
+6,373,1,6,265.13,0.00,1.46,40444462
