@@ -14,7 +14,7 @@ public class SimulationConfig {
     private final int energyToReproduce;         // energia rodziców zużywana na stworzenie potomka
     private final int minMutation;               // minimalna liczba mutacji u potomków
     private final int maxMutation;               // maksymalna liczba mutacji u potomków
-    private final int mutationVariant;        // wariant mutacji (np. losowa, systematyczna)
+    private final String mutationVariant;        // wariant mutacji (np. losowa, systematyczna)
     private final int genomeLength;              // długość genomu zwierzaków
     private final String animalBehaviorVariant;  // wariant zachowania zwierzaków (np. agresywne, pasywne)
 
@@ -23,7 +23,7 @@ public class SimulationConfig {
                             int plantEnergy, int plantsPerDay, String plantGrowthVariant,
                             int startingAnimalCount, int startingAnimalEnergy, int energyToBeFull,
                             int energyToReproduce, int minMutation, int maxMutation,
-                            int mutationVariant, int genomeLength, String animalBehaviorVariant) {
+                            String mutationVariant, int genomeLength, String animalBehaviorVariant) {
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.mapVariant = mapVariant;
@@ -96,7 +96,7 @@ public class SimulationConfig {
         return maxMutation;
     }
 
-    public int getMutationVariant() {
+    public String getMutationVariant() {
         return mutationVariant;
     }
 

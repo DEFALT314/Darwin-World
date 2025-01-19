@@ -2,13 +2,112 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
+            stylesheets="config.css"
             fx:controller="agh.ics.oop.presenter.ConfigPresenter">
+    <top>
+            <HBox>
+                <Label text="Darwin World" styleClass="heading-label"/>
+            </HBox>
+    </top>
     <center>
-   <Button onAction="#onStartClicked" text="Start"/>
+        <VBox>
+            <HBox>
+                <Label text="Map settings" styleClass="category-label"/>
+            </HBox>
+            <HBox>
+                <Label text="Map width:"/>
+                <Spinner fx:id="mapWidth" editable="true" min="1" max="40"/>
+            </HBox>
+            <HBox>
+                <Label text="Map height:"/>
+                <Spinner fx:id="mapHeight" editable="true" min="1" max="40"/>
+            </HBox>
+            <HBox>
+                <Label text="Map variant:"/>
+                <ComboBox fx:id="mapVariant"/>
+            </HBox>
+            <HBox>
+                <Label text="Plant settings" styleClass="category-label"/>
+            </HBox>
+            <HBox>
+                <Label text="Starting plant count:"/>
+                <Spinner fx:id="startingPlantCount" editable="true" min="0" max="1600"/>
+            </HBox>
+            <HBox>
+                <Label text="Plant energy:"/>
+                <Spinner fx:id="plantEnergy" editable="true" min="0" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Plants growing per day:"/>
+                <Spinner fx:id="plantsPerDay" editable="true" min="0" max="1600"/>
+            </HBox>
+            <HBox>
+                <Label text="Plant growth variant:"/>
+                <ComboBox fx:id="plantGrowthVariant"/>
+            </HBox>
+            <HBox>
+                <Label text="Animal settings" styleClass="category-label"/>
+            </HBox>
+            <HBox>
+                <Label text="Starting animal count:"/>
+                <Spinner fx:id="startingAnimalCount" editable="true" min="1" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Starting animal energy:"/>
+                <Spinner fx:id="startingAnimalEnergy" editable="true" min="1" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Maximum animal energy:"/>
+                <Spinner fx:id="energyToBeFull" editable="true" min="1" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Energy needed for reproduction:"/>
+                <Spinner fx:id="energyToReproduce" editable="true" min="1" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Genome length:"/>
+                <Spinner fx:id="genomeLength" editable="true" min="1" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Minimum number of mutations:"/>
+                <Spinner fx:id="minMutation" editable="true" min="0" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Maximum number of mutations:"/>
+                <Spinner fx:id="maxMutation" editable="true" min="0" max="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Mutation variant:"/>
+                <ComboBox fx:id="mutationVariant"/>
+            </HBox>
+            <HBox>
+                <Label text="Animal behaviour variant:"/>
+                <ComboBox fx:id="animalBehaviourVariant"/>
+            </HBox>
+            <HBox>
+                <Label text="Simulation settings:" styleClass="category-label"/>
+            </HBox>
+            <HBox>
+                <Label text="Day length (ms):"/>
+                <Spinner fx:id="dayLength" editable="true" min="1" max="10000" initialValue="100"/>
+            </HBox>
+            <HBox>
+                <Label fx:id="errorMessage" styleClass="error-label"/>
+            </HBox>
+        </VBox>
     </center>
+    <bottom>
+        <HBox>
+            <Button onAction="#onSaveClicked" text="Save"/>
+            <Button onAction="#onLoadClicked" text="Load"/>
+            <Button onAction="#onStartClicked" text="Start"/>
+        </HBox>
+    </bottom>
 </BorderPane>

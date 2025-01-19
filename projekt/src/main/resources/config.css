@@ -1,0 +1,28 @@
+HBox {
+    -fx-alignment: center;
+    -fx-spacing: 8;
+    -fx-padding: 2;
+}
+
+VBox {
+    -fx-padding: 16;
+}
+
+.heading-label {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
+.button {
+    -fx-pref-width: 128;
+    -fx-pref-height: 32;
+}
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-size: 14;
+}
+
+.category-label {
+    -fx-font-weight: bold;
+}
