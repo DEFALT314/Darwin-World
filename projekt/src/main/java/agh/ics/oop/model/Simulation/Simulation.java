@@ -95,11 +95,11 @@ public class Simulation implements Runnable {
         return worldMap;
     }
 
-    public SimulationConfig getCofig() {
+    public SimulationConfig getConfig() {
         return conf;
     }
 
-    public List<Animal> getAnimalsWithCommonGeonome() {
+    public List<Animal> getAnimalsWithCommonGenome() {
         return worldMap.getAnimalsWithGenome(stats.getStatsRecord().mostCommonGenome());
     }
 }

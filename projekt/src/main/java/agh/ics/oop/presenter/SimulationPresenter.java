@@ -90,7 +90,7 @@ public class SimulationPresenter implements SimulationListener {
 
     private Circle getCircle(Animal el, int size) {
         Animal animal = el;
-        double energyRatio = (double) animal.getEnergy() / simulation.getCofig().getEnergyToBeFull();
+        double energyRatio = (double) animal.getEnergy() / simulation.getConfig().getEnergyToBeFull();
         Color animalColor;
         if (animal.isDead()) {
             animalColor = Color.BROWN;
@@ -148,7 +148,7 @@ public class SimulationPresenter implements SimulationListener {
                 GridPane.setHalignment(overlay, HPos.CENTER);
                 mapGrid.add(overlay, location.getX() - xMin + 1, yMax - location.getY() + 1);
             }
-            var positions = simulation.getAnimalsWithCommonGeonome().stream().map(Animal::getPosition).toList();
+            var positions = simulation.getAnimalsWithCommonGenome().stream().map(Animal::getPosition).toList();
             for (Vector2d position : positions) {
                 Rectangle overlay = new Rectangle(size, size);
                 overlay.setFill(Color.VIOLET);

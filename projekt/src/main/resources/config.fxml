@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             minHeight="550.0" minWidth="850.0"
@@ -23,11 +24,11 @@
             </HBox>
             <HBox>
                 <Label text="Map width:"/>
-                <Spinner fx:id="mapWidth" editable="true" min="1" max="40"/>
+                <Spinner fx:id="mapWidth" editable="true" min="1" max="1000" initialValue="5"/>
             </HBox>
             <HBox>
                 <Label text="Map height:"/>
-                <Spinner fx:id="mapHeight" editable="true" min="1" max="40"/>
+                <Spinner fx:id="mapHeight" editable="true" min="1" max="1000" initialValue="5"/>
             </HBox>
             <HBox>
                 <Label text="Map variant:"/>
@@ -38,15 +39,15 @@
             </HBox>
             <HBox>
                 <Label text="Starting plant count:"/>
-                <Spinner fx:id="startingPlantCount" editable="true" min="0" max="1600"/>
+                <Spinner fx:id="startingPlantCount" editable="true" min="0" max="1600" initialValue="10"/>
             </HBox>
             <HBox>
                 <Label text="Plant energy:"/>
-                <Spinner fx:id="plantEnergy" editable="true" min="0" max="1000"/>
+                <Spinner fx:id="plantEnergy" editable="true" min="0" max="1000" initialValue="5"/>
             </HBox>
             <HBox>
                 <Label text="Plants growing per day:"/>
-                <Spinner fx:id="plantsPerDay" editable="true" min="0" max="1600"/>
+                <Spinner fx:id="plantsPerDay" editable="true" min="0" max="1600" initialValue="2"/>
             </HBox>
             <HBox>
                 <Label text="Plant growth variant:"/>
@@ -57,31 +58,31 @@
             </HBox>
             <HBox>
                 <Label text="Starting animal count:"/>
-                <Spinner fx:id="startingAnimalCount" editable="true" min="1" max="1000"/>
+                <Spinner fx:id="startingAnimalCount" editable="true" min="1" max="1000" initialValue="5"/>
             </HBox>
             <HBox>
                 <Label text="Starting animal energy:"/>
-                <Spinner fx:id="startingAnimalEnergy" editable="true" min="1" max="1000"/>
+                <Spinner fx:id="startingAnimalEnergy" editable="true" min="1" max="1000" initialValue="10"/>
             </HBox>
             <HBox>
                 <Label text="Maximum animal energy:"/>
-                <Spinner fx:id="energyToBeFull" editable="true" min="1" max="1000"/>
+                <Spinner fx:id="energyToBeFull" editable="true" min="1" max="1000" initialValue="30"/>
             </HBox>
             <HBox>
                 <Label text="Energy needed for reproduction:"/>
-                <Spinner fx:id="energyToReproduce" editable="true" min="1" max="1000"/>
+                <Spinner fx:id="energyToReproduce" editable="true" min="1" max="1000" initialValue="25"/>
             </HBox>
             <HBox>
                 <Label text="Genome length:"/>
-                <Spinner fx:id="genomeLength" editable="true" min="1" max="1000"/>
+                <Spinner fx:id="genomeLength" editable="true" min="1" max="1000" initialValue="8"/>
             </HBox>
             <HBox>
                 <Label text="Minimum number of mutations:"/>
-                <Spinner fx:id="minMutation" editable="true" min="0" max="1000"/>
+                <Spinner fx:id="minMutation" editable="true" min="0" max="1000" initialValue="0"/>
             </HBox>
             <HBox>
                 <Label text="Maximum number of mutations:"/>
-                <Spinner fx:id="maxMutation" editable="true" min="0" max="1000"/>
+                <Spinner fx:id="maxMutation" editable="true" min="0" max="1000" initialValue="8"/>
             </HBox>
             <HBox>
                 <Label text="Mutation variant:"/>
@@ -92,11 +93,15 @@
                 <ComboBox fx:id="animalBehaviourVariant"/>
             </HBox>
             <HBox>
-                <Label text="Simulation settings:" styleClass="category-label"/>
+                <Label text="Simulation settings" styleClass="category-label"/>
             </HBox>
             <HBox>
                 <Label text="Day length (ms):"/>
-                <Spinner fx:id="dayLength" editable="true" min="1" max="10000" initialValue="100"/>
+                <Spinner fx:id="dayLength" editable="true" min="1" max="10000" initialValue="1000"/>
+            </HBox>
+            <HBox>
+                <Label text="Export simulation statistics to .csv file:"/>
+                <CheckBox fx:id="exportStats"/>
             </HBox>
             <HBox>
                 <Label fx:id="errorMessage" styleClass="error-label"/>

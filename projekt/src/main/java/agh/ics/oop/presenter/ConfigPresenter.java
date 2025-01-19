@@ -1,13 +1,20 @@
 package agh.ics.oop.presenter;
 
+import agh.ics.oop.model.Genomes.GenomesAbstract;
+import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Genomes.NormalGenomesFactory;
+import agh.ics.oop.model.Genomes.SwapGenomesFactory;
+import agh.ics.oop.model.Map.AbstractMap;
 import agh.ics.oop.model.Map.EarthMap;
+import agh.ics.oop.model.Map.IceMap;
+import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Simulation.Simulation;
 import agh.ics.oop.model.Simulation.SimulationConfig;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -53,6 +60,8 @@ public class ConfigPresenter {
     @FXML
     public Spinner<Integer> dayLength;
     @FXML
+    public CheckBox exportStats;
+    @FXML
     public Label errorMessage;
     @FXML
     public void initialize() {
@@ -88,7 +97,25 @@ public class ConfigPresenter {
                 energyToBeFull.getValue(), energyToReproduce.getValue(), minMutation.getValue(),
                 maxMutation.getValue(), mutationVariant.getValue(), genomeLength.getValue(),
                 animalBehaviourVariant.getValue());
-        return new Simulation(new EarthMap(5, 5), conf, new NormalGenomesFactory(), true);
+        WorldMap chosenMap = null;
+        GenomesFactory chosenMutationVariant = null;
+        switch (mapVariant.getValue()) {
+            case "Earth":
+                chosenMap = new EarthMap(mapWidth.getValue(), mapHeight.getValue());
+                break;
+            case "Poles":
+                chosenMap = new IceMap(mapWidth.getValue(), mapHeight.getValue());
+                break;
+        }
+        switch (mutationVariant.getValue()) {
+            case "Random":
+                chosenMutationVariant = new NormalGenomesFactory();
+                break;
+            case "Swap":
+                chosenMutationVariant = new SwapGenomesFactory();
+                break;
+        }
+        return new Simulation(chosenMap, conf, chosenMutationVariant, exportStats.isSelected());
     }
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
@@ -102,6 +129,9 @@ public class ConfigPresenter {
         if (mapVariant.getValue() == null) {
             updateErrorMessage("Choose a map variant!");
             return false;
+        }
+        if (startingPlantCount.getValue() > mapWidth.getValue() * mapHeight.getValue()) {
+            updateErrorMessage("Starting plant count is greater than map area!");
         }
         if (plantGrowthVariant.getValue() == null) {
             updateErrorMessage("Choose a plant growth variant!");
