@@ -15,6 +15,6 @@ public class Main {
 //        var sim = new Simulation(new EarthMap(5, 5), conf, new NormalGenomesFactory(), true);
 //        sim.run();
 
-        Application.launch(ConfigApp.class, args);
+        Application.launch(SimulationApp.class, args);
     }
 }

@@ -46,7 +46,7 @@ public class PlantSpawner {
         for (int y = 0; y < conf.getMapHeight(); y++) {
             for (int x = 0; x < conf.getMapWidth(); x++) {
                 Vector2d cell = new Vector2d(x, y);
-                if (worldMap.isNotPlanted(cell)) {
+                if (!worldMap.isPlanted(cell)) {
                     if (y >= preferredZoneStart && y <= preferredZoneEnd) {
                         equatorCells.add(cell);
                     } else {

@@ -17,11 +17,17 @@ public class Boxes {
     public Boxes() {
         this.boxes = new HashMap<>();
     }
-    public boolean isNotPlanted(Vector2d location) {
-        return boxes.get(location) == null || boxes.get(location).isPlanted();
+    public boolean isPlanted(Vector2d location) {
+        return boxes.containsKey(location) && boxes.get(location).isPlanted();
     }
     public Map<Vector2d, Box> getBoxes() {
         return boxes;
+    }
+    public Optional<Animal> strongestAnimalAt(Vector2d position) {
+        if (!boxes.containsKey(position)) {
+            return Optional.empty();
+        }
+        return boxes.get(position).getStrongestAnimal();
     }
     public Optional<WorldElement> objectAt(Vector2d position) {
         if (!boxes.containsKey(position)) {

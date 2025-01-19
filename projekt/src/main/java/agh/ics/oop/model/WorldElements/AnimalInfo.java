@@ -36,6 +36,7 @@ public class AnimalInfo {
 
     public void addEnergy(int energy) {
         this.energy += energy;
+        this.energy = Math.min(this.energy, energyToBeFull);
         if (this.energy < 0) {
             markAsDead();
         }

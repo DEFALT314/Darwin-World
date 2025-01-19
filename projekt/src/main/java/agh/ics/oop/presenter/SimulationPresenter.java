@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SimulationPresenter implements SimulationListener {
     public GridPane mapGrid;
@@ -33,7 +34,7 @@ public class SimulationPresenter implements SimulationListener {
     public Label animalInfo;
     private Simulation simulation;
     private Animal selectedAnimal;
-    private int size = 50;
+    private int size = 20;
     public void drawMap(){
         var worldMap = simulation.getWorldMap();
         clearGrid();
@@ -68,23 +69,35 @@ public class SimulationPresenter implements SimulationListener {
                 Vector2d p  = new Vector2d(i, j);
                 int finalJ = j;
                 int finalI = i;
-                worldMap.objectAt(p).ifPresentOrElse((WorldElement el) -> {
-                    if (el instanceof Animal) {
-                        Circle shape = getCircle((Animal) el, size);
-                        shape.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> handleCellClick((Animal) el));
-                        GridPane.setHalignment(shape, HPos.CENTER);
-                        mapGrid.add(shape, finalI - xMin + 1, yMax - finalJ + 1);
-
-
-                    } else if (el instanceof Plant) {
-                        Rectangle plantSquare = new Rectangle(size, size, Color.GREEN);
-                        GridPane.setHalignment(plantSquare, HPos.CENTER);
-                        mapGrid.add(plantSquare, finalI - xMin + 1, yMax - finalJ + 1);
-                    }
-
-                }, ()->{
-                    mapGrid.add(new Label(""), finalI - xMin + 1, yMax - finalJ + 1);
+                if (worldMap.isPlanted(p)){
+                    Rectangle plantSquare = new Rectangle(size, size, Color.GREEN);
+                    GridPane.setHalignment(plantSquare, HPos.CENTER);
+                    mapGrid.add(plantSquare, finalI - xMin + 1, yMax - finalJ + 1);
+                }
+                Optional<Animal> animal = worldMap.getStrongestAnimalAt(p);
+                animal.ifPresent((Animal a) -> {
+                    Circle shape = getCircle(a, size);
+                    shape.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> handleCellClick(a));
+                    GridPane.setHalignment(shape, HPos.CENTER);
+                    mapGrid.add(shape, finalI - xMin + 1, yMax - finalJ + 1);
                 });
+//                worldMap.objectAt(p).ifPresentOrElse((WorldElement el) -> {
+//                    if (el instanceof Animal) {
+//                        Circle shape = getCircle((Animal) el, size);
+//                        shape.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> handleCellClick((Animal) el));
+//                        GridPane.setHalignment(shape, HPos.CENTER);
+//                        mapGrid.add(shape, finalI - xMin + 1, yMax - finalJ + 1);
+//
+//
+//                    } else if (el instanceof Plant) {
+//                        Rectangle plantSquare = new Rectangle(size, size, Color.GREEN);
+//                        GridPane.setHalignment(plantSquare, HPos.CENTER);
+//                        mapGrid.add(plantSquare, finalI - xMin + 1, yMax - finalJ + 1);
+//                    }
+//
+//                }, ()->{
+//                    mapGrid.add(new Label(""), finalI - xMin + 1, yMax - finalJ + 1);
+//                });
             }
         }
     }

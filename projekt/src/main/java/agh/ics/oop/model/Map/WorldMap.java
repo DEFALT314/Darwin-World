@@ -50,7 +50,7 @@ public interface WorldMap extends MoveValidator {
      */
     Optional<WorldElement> objectAt(Vector2d position);
 
-    boolean isNotPlanted(Vector2d cell);
+    boolean isPlanted(Vector2d cell);
 
     void removeDeadAnimals();
 
@@ -71,5 +71,7 @@ public interface WorldMap extends MoveValidator {
     Boundary getCurrentBounds();
 
     List<Animal> getAnimalsWithGenome(GenomesAbstract genomesAbstract);
+
+    Optional<Animal> getStrongestAnimalAt(Vector2d p);
 
 }

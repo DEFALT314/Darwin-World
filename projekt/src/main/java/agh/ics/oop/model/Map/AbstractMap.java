@@ -67,11 +67,16 @@ public abstract class AbstractMap implements WorldMap {
         if (canMoveTo(animal.getPosition())) {
             boxesContainer.removeAnimal(animal);
         }
+
+    }
+    @Override
+    public Optional<Animal> getStrongestAnimalAt(Vector2d position) {
+        return boxesContainer.strongestAnimalAt(position);
     }
 
 
-    public boolean isNotPlanted(Vector2d location) {
-        return boxesContainer.isNotPlanted(location);
+    public boolean isPlanted(Vector2d location) {
+        return boxesContainer.isPlanted(location);
     }
 
     public List<Vector2d> getEmptyPositions() {

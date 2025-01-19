@@ -2,6 +2,7 @@ package agh.ics.oop.model.Map;
 
 import agh.ics.oop.model.WorldElements.Animal;
 import agh.ics.oop.model.WorldElements.Plant;
+import agh.ics.oop.model.WorldElements.WorldElement;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,9 @@ public class Box {
 
     public List<Animal> getAnimals() {
         return animalGroup.getAnimals();
+    }
+    public Optional<Animal> getStrongestAnimal() {
+        return animalGroup.getStrongestAnimal();
     }
 
     public boolean isPlanted() {
