@@ -100,7 +100,7 @@ class EarthMapTest {
         } catch (IncorrectPositionException e) {
             fail();
         }
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 20; i++) {
             map.moveAnimal(animal);
         }
         assertTrue(map.getDeadAnimals().contains(animal));

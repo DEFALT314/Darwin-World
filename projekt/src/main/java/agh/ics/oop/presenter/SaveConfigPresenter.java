@@ -1,6 +1,6 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.model.util.ConfigWriter;
+import agh.ics.oop.model.Utilities.ConfigWriter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

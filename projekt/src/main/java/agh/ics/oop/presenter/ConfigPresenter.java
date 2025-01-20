@@ -8,7 +8,7 @@ import agh.ics.oop.model.Map.IceMap;
 import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Simulation.Simulation;
 import agh.ics.oop.model.Simulation.SimulationConfig;
-import agh.ics.oop.model.util.ConfigLoader;
+import agh.ics.oop.model.Utilities.ConfigLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

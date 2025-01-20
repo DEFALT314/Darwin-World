@@ -1,4 +1,4 @@
-package agh.ics.oop.model.util;
+package agh.ics.oop.model.Utilities;
 
 import agh.ics.oop.presenter.ConfigPresenter;
 
