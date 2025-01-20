@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-import agh.ics.oop.model.WorldElements.Vector2d;
+import agh.ics.oop.model.worldelements.Vector2d;
 
 public class IncorrectPositionException extends Exception {
     public IncorrectPositionException(Vector2d position) {

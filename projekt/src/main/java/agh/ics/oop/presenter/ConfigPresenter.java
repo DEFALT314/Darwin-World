@@ -1,14 +1,14 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.model.Genomes.GenomesFactory;
-import agh.ics.oop.model.Genomes.NormalGenomesFactory;
-import agh.ics.oop.model.Genomes.SwapGenomesFactory;
-import agh.ics.oop.model.Map.EarthMap;
-import agh.ics.oop.model.Map.IceMap;
-import agh.ics.oop.model.Map.WorldMap;
-import agh.ics.oop.model.Simulation.Simulation;
-import agh.ics.oop.model.Simulation.SimulationConfig;
-import agh.ics.oop.model.Utilities.ConfigLoader;
+import agh.ics.oop.model.genomes.GenomesFactory;
+import agh.ics.oop.model.genomes.NormalGenomesFactory;
+import agh.ics.oop.model.genomes.SwapGenomesFactory;
+import agh.ics.oop.model.map.EarthMap;
+import agh.ics.oop.model.map.IceMap;
+import agh.ics.oop.model.map.WorldMap;
+import agh.ics.oop.model.simulation.Simulation;
+import agh.ics.oop.model.simulation.SimulationConfig;
+import agh.ics.oop.model.utilities.ConfigLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

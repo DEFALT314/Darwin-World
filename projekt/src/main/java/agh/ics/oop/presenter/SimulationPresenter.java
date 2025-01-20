@@ -1,12 +1,12 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.model.Map.Boundary;
-import agh.ics.oop.model.Map.WorldMap;
-import agh.ics.oop.model.Simulation.Simulation;
-import agh.ics.oop.model.Simulation.SimulationListener;
-import agh.ics.oop.model.Stats.SimulationStatsRecord;
-import agh.ics.oop.model.WorldElements.Vector2d;
-import agh.ics.oop.model.WorldElements.Animal;
+import agh.ics.oop.model.map.Boundary;
+import agh.ics.oop.model.map.WorldMap;
+import agh.ics.oop.model.simulation.Simulation;
+import agh.ics.oop.model.simulation.SimulationListener;
+import agh.ics.oop.model.stats.SimulationStatsRecord;
+import agh.ics.oop.model.worldelements.Vector2d;
+import agh.ics.oop.model.worldelements.Animal;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
