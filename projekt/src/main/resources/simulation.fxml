@@ -10,8 +10,10 @@
             fx:controller="agh.ics.oop.presenter.SimulationPresenter">
     <left>
          <VBox>
-             <Label fx:id="statisticsLabel" text="Statystyki" />
-             <Label fx:id="animalInfo" text="Zwierzęta" />
+             <Label text="Statistics:"/>
+             <Label fx:id="statisticsLabel"/>
+             <Label text="Animal info:"/>
+             <Label fx:id="animalInfo"/>
          </VBox>
     </left>
     <center>
