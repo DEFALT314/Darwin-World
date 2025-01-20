@@ -9,7 +9,6 @@ import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Simulation.Simulation;
 import agh.ics.oop.model.Simulation.SimulationConfig;
 import agh.ics.oop.model.util.ConfigLoader;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
