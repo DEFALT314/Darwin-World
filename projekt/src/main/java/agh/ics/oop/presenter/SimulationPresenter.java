@@ -1,20 +1,15 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.SimulationApp;
 import agh.ics.oop.model.Map.Boundary;
 import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Simulation.Simulation;
 import agh.ics.oop.model.Simulation.SimulationListener;
 import agh.ics.oop.model.Stats.SimulationStatsRecord;
 import agh.ics.oop.model.WorldElements.Vector2d;
-import agh.ics.oop.model.WorldElements.WorldElement;
 import agh.ics.oop.model.WorldElements.Animal;
-import agh.ics.oop.model.WorldElements.Plant;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
@@ -23,7 +18,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 import java.util.List;
 import java.util.Optional;
