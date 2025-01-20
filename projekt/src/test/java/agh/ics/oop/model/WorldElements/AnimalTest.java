@@ -1,13 +1,10 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.WorldElements;
 
 import agh.ics.oop.model.Genomes.Genomes;
 import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Genomes.NormalGenomesFactory;
 import agh.ics.oop.model.Map.Boundary;
 import agh.ics.oop.model.Simulation.SimulationConfig;
-import agh.ics.oop.model.WorldElements.Animal;
-import agh.ics.oop.model.WorldElements.MapDirection;
-import agh.ics.oop.model.WorldElements.Vector2d;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

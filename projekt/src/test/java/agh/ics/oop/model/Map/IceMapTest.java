@@ -1,9 +1,9 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Map;
 
 import agh.ics.oop.model.Genomes.Genomes;
 import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Genomes.NormalGenomesFactory;
-import agh.ics.oop.model.Map.IceMap;
+import agh.ics.oop.model.IncorrectPositionException;
 import agh.ics.oop.model.Simulation.SimulationConfig;
 import agh.ics.oop.model.WorldElements.Animal;
 import agh.ics.oop.model.WorldElements.MapDirection;
@@ -88,13 +88,13 @@ class IceMapTest {
         }
         assertEquals(20, animal.getEnergy());
         map.moveAnimal(animal);
-        assertEquals(19, animal.getEnergy());
+        assertEquals(18, animal.getEnergy());
         map.moveAnimal(animal);
-        assertEquals(17, animal.getEnergy());
+        assertEquals(15, animal.getEnergy());
         map.moveAnimal(animal);
-        assertEquals(14, animal.getEnergy());
+        assertEquals(11, animal.getEnergy());
         map.moveAnimal(animal);
-        assertEquals(10, animal.getEnergy());
+        assertEquals(7, animal.getEnergy());
     }
 
     @Test

@@ -1,6 +1,5 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.WorldElements;
 
-import agh.ics.oop.model.WorldElements.Vector2d;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

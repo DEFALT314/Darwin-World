@@ -1,8 +1,7 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Map;
 
 import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Genomes.NormalGenomesFactory;
-import agh.ics.oop.model.Map.Box;
 import agh.ics.oop.model.Simulation.SimulationConfig;
 import agh.ics.oop.model.WorldElements.Animal;
 import agh.ics.oop.model.WorldElements.Plant;
@@ -17,6 +16,10 @@ class BoxTest {
     SimulationConfig conf = new SimulationConfig(4, 4, "ziemia",
             0, 0, 0, "0", 0,
             20, 30, 20, 2, 5,
+            "", 4, "0");
+    SimulationConfig conf2 = new SimulationConfig(4, 4, "ziemia",
+            0, 0, 0, "0", 0,
+            25, 30, 20, 2, 5,
             "", 4, "0");
     GenomesFactory factory = new NormalGenomesFactory();
 
@@ -94,6 +97,15 @@ class BoxTest {
     @Test
     void strongestAnimalEatsPlant() {
         Box box = new Box();
-
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf, factory);
+        Animal animal2 = new Animal(new Vector2d(2, 2), conf2, factory);
+        Plant plant = new Plant(new Vector2d(2, 2), 5);
+        box.addAnimal(animal1);
+        assertEquals(animal1, box.getStrongestAnimal().get());
+        box.addAnimal(animal2);
+        box.setPlant(plant);
+        assertEquals(animal2, box.getStrongestAnimal().get());
+        box.eatPlant();
+        assertEquals(30, box.getStrongestAnimal().get().getEnergy());
     }
 }

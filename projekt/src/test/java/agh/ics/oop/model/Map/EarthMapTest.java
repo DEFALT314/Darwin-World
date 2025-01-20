@@ -1,9 +1,9 @@
-package agh.ics.oop.model;
+package agh.ics.oop.model.Map;
 
 import agh.ics.oop.model.Genomes.Genomes;
 import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Genomes.NormalGenomesFactory;
-import agh.ics.oop.model.Map.EarthMap;
+import agh.ics.oop.model.IncorrectPositionException;
 import agh.ics.oop.model.Simulation.SimulationConfig;
 import agh.ics.oop.model.WorldElements.Animal;
 import agh.ics.oop.model.WorldElements.MapDirection;
