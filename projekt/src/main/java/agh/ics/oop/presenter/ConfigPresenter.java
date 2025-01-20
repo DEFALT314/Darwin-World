@@ -103,6 +103,7 @@ public class ConfigPresenter {
         }
         if (startingPlantCount.getValue() > mapWidth.getValue() * mapHeight.getValue()) {
             setErrorMessage("Starting plant count is greater than map area!");
+            return false;
         }
         if (plantGrowthVariant.getValue() == null) {
             setErrorMessage("Choose a plant growth variant!");
@@ -118,6 +119,7 @@ public class ConfigPresenter {
         }
         if (minMutation.getValue() > maxMutation.getValue()) {
             setErrorMessage("Minimum number of mutations exceeds maximum number of mutations!");
+            return false;
         }
         if (mutationVariant.getValue() == null) {
             setErrorMessage("Choose a mutation variant!");

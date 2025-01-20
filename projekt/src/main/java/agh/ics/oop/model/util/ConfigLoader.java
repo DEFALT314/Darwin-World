@@ -14,17 +14,19 @@ public class ConfigLoader {
     public ConfigLoader(ConfigPresenter presenter) {
         this.presenter = presenter;
     }
-
-    public Boolean set(File file) {
+    private Boolean validExtension(File file) {
         String extension = "";
         String fileName = file.getName();
         if (fileName.contains("."))
             extension = fileName.substring(fileName.lastIndexOf("."));
-        if (extension.equals(".properties")) {
-            this.file = file;
-            return true;
-        }
-        return false;
+        return extension.equals(".properties");
+    }
+    public Boolean set(File file) {
+       if (validExtension(file)) {
+           this.file = file;
+           return true;
+       }
+       return false;
     }
     public Boolean load() {
         try (InputStream in = new FileInputStream(file)) {
