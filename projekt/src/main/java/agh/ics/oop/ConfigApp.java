@@ -18,7 +18,6 @@ public class ConfigApp extends Application {
 
         configureStage(primaryStage, rootNode);
         primaryStage.show();
-//        primaryStage.setOnCloseRequest((event -> simulation.stop()));
 
     }
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
@@ -28,5 +27,5 @@ public class ConfigApp extends Application {
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }
-    }
+}
 

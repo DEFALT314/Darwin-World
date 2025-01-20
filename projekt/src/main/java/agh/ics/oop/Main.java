@@ -1,5 +1,6 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.util.ConfigWriter;
 import javafx.application.Application;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

@@ -104,7 +104,7 @@
                 <CheckBox fx:id="exportStats"/>
             </HBox>
             <HBox>
-                <Label fx:id="errorMessage" styleClass="error-label"/>
+                <Label fx:id="messageLabel"/>
             </HBox>
         </VBox>
     </center>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="agh.ics.oop.presenter.SaveConfigPresenter"
+            minHeight="200.0" minWidth="350.0" stylesheets="saveconfig.css">
+    <center>
+        <VBox>
+            <Label text="Config file name:"/>
+            <Pane HBox.hgrow="ALWAYS">
+                <HBox>
+                    <TextField fx:id="fileName"/>
+                </HBox>
+            </Pane>
+            <Label text="Directory:"/>
+            <Pane HBox.hgrow="ALWAYS">
+                <HBox>
+                    <TextField fx:id="directoryName"/>
+                    <Button text="Change" onAction="#onChangeDirectoryClicked"/>
+                </HBox>
+            </Pane>
+            <Pane HBox.hgrow="ALWAYS">
+                <HBox>
+                    <Button text="Save configuration" onAction="#onSaveConfigClicked"/>
+                </HBox>
+            </Pane>
+            <Pane HBox.hgrow="ALWAYS">
+                <HBox>
+                    <Label fx:id="messageLabel"/>
+                </HBox>
+            </Pane>
+        </VBox>
+    </center>
+</BorderPane>

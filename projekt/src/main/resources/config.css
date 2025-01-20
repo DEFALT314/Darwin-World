@@ -18,8 +18,7 @@ VBox {
     -fx-pref-height: 32;
 }
 
-.error-label {
-    -fx-text-fill: red;
+.message-label {
     -fx-font-size: 14;
 }
 

@@ -1,15 +1,14 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.model.Genomes.GenomesAbstract;
 import agh.ics.oop.model.Genomes.GenomesFactory;
 import agh.ics.oop.model.Genomes.NormalGenomesFactory;
 import agh.ics.oop.model.Genomes.SwapGenomesFactory;
-import agh.ics.oop.model.Map.AbstractMap;
 import agh.ics.oop.model.Map.EarthMap;
 import agh.ics.oop.model.Map.IceMap;
 import agh.ics.oop.model.Map.WorldMap;
 import agh.ics.oop.model.Simulation.Simulation;
 import agh.ics.oop.model.Simulation.SimulationConfig;
+import agh.ics.oop.model.util.ConfigLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,74 +18,53 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public class ConfigPresenter {
     @FXML
-    public Spinner<Integer> mapWidth;
+    public Spinner<Integer> mapWidth, mapHeight, startingPlantCount, plantEnergy, plantsPerDay,
+            startingAnimalCount, startingAnimalEnergy, energyToBeFull, energyToReproduce, genomeLength, minMutation,
+            maxMutation, dayLength;
     @FXML
-    public Spinner<Integer> mapHeight;
-    @FXML
-    public ComboBox<String> mapVariant;
-    @FXML
-    public Spinner<Integer> startingPlantCount;
-    @FXML
-    public Spinner<Integer> plantEnergy;
-    @FXML
-    public Spinner<Integer> plantsPerDay;
-    @FXML
-    public ComboBox<String> plantGrowthVariant;
-    @FXML
-    public Spinner<Integer> startingAnimalCount;
-    @FXML
-    public Spinner<Integer> startingAnimalEnergy;
-    @FXML
-    public Spinner<Integer> energyToBeFull;
-    @FXML
-    public Spinner<Integer> energyToReproduce;
-    @FXML
-    public Spinner<Integer> genomeLength;
-    @FXML
-    public Spinner<Integer> minMutation;
-    @FXML
-    public Spinner<Integer> maxMutation;
-    @FXML
-    public ComboBox<String> mutationVariant;
-    @FXML
-    public ComboBox<String> animalBehaviourVariant;
-    @FXML
-    public Spinner<Integer> dayLength;
+    public ComboBox<String> mapVariant, plantGrowthVariant, mutationVariant, animalBehaviourVariant;
     @FXML
     public CheckBox exportStats;
     @FXML
-    public Label errorMessage;
+    public Label messageLabel;
     @FXML
     public void initialize() {
         String [] mapTypes = {"Earth", "Poles"};
         mapVariant.getItems().addAll(mapTypes);
+        mapVariant.setValue("Earth");
         String [] plantGrowthTypes = {"Forested equator"};
         plantGrowthVariant.getItems().addAll(plantGrowthTypes);
+        plantGrowthVariant.setValue("Forested equator");
         String [] mutationTypes = {"Random", "Swap"};
         mutationVariant.getItems().addAll(mutationTypes);
+        mutationVariant.setValue("Random");
         String [] animalBehaviourTypes = {"Full predestination"};
         animalBehaviourVariant.getItems().addAll(animalBehaviourTypes);
+        animalBehaviourVariant.setValue("Full predestination");
     }
 
-    public void onStartClicked(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("simulation.fxml"));
-        BorderPane rootNode = loader.load();
-        Stage primaryStage = new Stage();
+    public void onStartClicked() throws IOException {
         if (verifyConfig()) {
-            updateErrorMessage("");
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("simulation.fxml"));
+            BorderPane rootNode = loader.load();
+            Stage primaryStage = new Stage();
+            setErrorMessage("");
             Simulation simulation = getSimulation();
             SimulationPresenter controller = loader.getController();
             simulation.addListener(controller);
             controller.setSimulation(simulation);
-            configureStage(primaryStage, rootNode);
+            configureStage(primaryStage, rootNode, "Darwin World");
             primaryStage.show();
+            primaryStage.setOnCloseRequest((event -> simulation.stop()));
         }
     }
 
@@ -96,75 +74,99 @@ public class ConfigPresenter {
                 plantGrowthVariant.getValue(), startingAnimalCount.getValue(), startingAnimalEnergy.getValue(),
                 energyToBeFull.getValue(), energyToReproduce.getValue(), minMutation.getValue(),
                 maxMutation.getValue(), mutationVariant.getValue(), genomeLength.getValue(),
-                animalBehaviourVariant.getValue());
+                animalBehaviourVariant.getValue(), dayLength.getValue());
         WorldMap chosenMap = null;
         GenomesFactory chosenMutationVariant = null;
-        switch (mapVariant.getValue()) {
-            case "Earth":
-                chosenMap = new EarthMap(mapWidth.getValue(), mapHeight.getValue());
-                break;
-            case "Poles":
-                chosenMap = new IceMap(mapWidth.getValue(), mapHeight.getValue());
-                break;
-        }
-        switch (mutationVariant.getValue()) {
-            case "Random":
-                chosenMutationVariant = new NormalGenomesFactory();
-                break;
-            case "Swap":
-                chosenMutationVariant = new SwapGenomesFactory();
-                break;
-        }
+        chosenMap = switch (mapVariant.getValue()) {
+            case "Earth" -> new EarthMap(mapWidth.getValue(), mapHeight.getValue());
+            case "Poles" -> new IceMap(mapWidth.getValue(), mapHeight.getValue());
+            default -> chosenMap;
+        };
+        chosenMutationVariant = switch (mutationVariant.getValue()) {
+            case "Random" -> new NormalGenomesFactory();
+            case "Swap" -> new SwapGenomesFactory();
+            default -> chosenMutationVariant;
+        };
         return new Simulation(chosenMap, conf, chosenMutationVariant, exportStats.isSelected());
     }
 
-    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
+    private void configureStage(Stage primaryStage, BorderPane viewRoot, String name) {
         var scene = new Scene(viewRoot);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Simulation app");
+        primaryStage.setTitle(name);
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }
     private Boolean verifyConfig() {
         if (mapVariant.getValue() == null) {
-            updateErrorMessage("Choose a map variant!");
+            setErrorMessage("Choose a map variant!");
             return false;
         }
         if (startingPlantCount.getValue() > mapWidth.getValue() * mapHeight.getValue()) {
-            updateErrorMessage("Starting plant count is greater than map area!");
+            setErrorMessage("Starting plant count is greater than map area!");
         }
         if (plantGrowthVariant.getValue() == null) {
-            updateErrorMessage("Choose a plant growth variant!");
+            setErrorMessage("Choose a plant growth variant!");
             return false;
         }
         if (startingAnimalEnergy.getValue() > energyToBeFull.getValue()) {
-            updateErrorMessage("Starting animal energy exceeds maximum energy!");
+            setErrorMessage("Starting animal energy exceeds maximum energy!");
             return false;
         }
         if (energyToReproduce.getValue() > energyToBeFull.getValue()) {
-            updateErrorMessage("Energy needed for reproduction exceeds maximum energy!");
+            setErrorMessage("Energy needed for reproduction exceeds maximum energy!");
             return false;
         }
         if (minMutation.getValue() > maxMutation.getValue()) {
-            updateErrorMessage("Minimum number of mutations exceeds maximum number of mutations!");
+            setErrorMessage("Minimum number of mutations exceeds maximum number of mutations!");
         }
         if (mutationVariant.getValue() == null) {
-            updateErrorMessage("Choose a mutation variant!");
+            setErrorMessage("Choose a mutation variant!");
             return false;
         }
         if (animalBehaviourVariant.getValue() == null) {
-            updateErrorMessage("Choose an animal behaviour variant!");
+            setErrorMessage("Choose an animal behaviour variant!");
             return false;
         }
         return true;
     }
-    public void onSaveClicked(ActionEvent actionEvent) {
-
+    public void onSaveClicked() throws IOException {
+        if (verifyConfig()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("saveconfig.fxml"));
+            BorderPane rootNode = loader.load();
+            Stage primaryStage = new Stage();
+            setErrorMessage("");
+            SaveConfigPresenter controller = loader.getController();
+            controller.setPresenter(this);
+            configureStage(primaryStage, rootNode, "Save Configuration");
+            primaryStage.show();
+        }
     }
-    public void onLoadClicked(ActionEvent actionEvent) {
-
+    public void onLoadClicked() {
+        ConfigLoader configLoader = new ConfigLoader(this);
+        Stage primaryStage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(primaryStage);
+        if (selectedFile != null) {
+            if (configLoader.set(selectedFile)) {
+                if (configLoader.load()) {
+                    setSuccessMessage("Configuration file loaded!");
+                }
+                else {
+                    setErrorMessage("Could not load configuration file!");
+                }
+            }
+            else {
+                setErrorMessage("Incorrect file extension!");
+            }
+        }
     }
-    private void updateErrorMessage(String message) {
-        errorMessage.setText(message);
+    private void setErrorMessage(String message) {
+        messageLabel.setTextFill(Paint.valueOf("red"));
+        messageLabel.setText(message);
+    }
+    private void setSuccessMessage(String message) {
+        messageLabel.setTextFill(Paint.valueOf("green"));
+        messageLabel.setText(message);
     }
 }
