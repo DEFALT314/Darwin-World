@@ -51,8 +51,8 @@ public abstract class AbstractMap implements WorldMap {
     @Override
     public void moveAnimal(Animal animal) {
         boxesContainer.removeAnimal(animal);
-        reduceEnergyToMove(animal);
         animal.move(boundary);
+        reduceEnergyToMove(animal);
         boxesContainer.addAnimal(animal);
         if( animal.isDead()){
             deadAnimals.addDeadAnimal(animal);
