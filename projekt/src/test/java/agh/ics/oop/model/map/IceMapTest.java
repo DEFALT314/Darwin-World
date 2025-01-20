@@ -7,6 +7,7 @@ import agh.ics.oop.model.IncorrectPositionException;
 import agh.ics.oop.model.simulation.SimulationConfig;
 import agh.ics.oop.model.worldelements.Animal;
 import agh.ics.oop.model.worldelements.MapDirection;
+import agh.ics.oop.model.worldelements.Plant;
 import agh.ics.oop.model.worldelements.Vector2d;
 import org.junit.jupiter.api.Test;
 
@@ -111,5 +112,81 @@ class IceMapTest {
             map.moveAnimal(animal);
         }
         assertTrue(map.getDeadAnimals().contains(animal));
+    }
+
+    @Test
+    void plantsCountTest() {
+        EarthMap map = new EarthMap(5, 5);
+        Plant plant1 = new Plant(new Vector2d(2, 2), 5);
+        Plant plant2 = new Plant(new Vector2d(2, 3), 5);
+        Animal animal = new Animal(new Vector2d(2, 2), conf, factory);
+        assertEquals(0, map.plantsCount());
+        map.placePlant(plant1);
+        assertEquals(1, map.plantsCount());
+        map.placePlant(plant2);
+        assertEquals(2, map.plantsCount());
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail();
+        }
+        map.eatPlants();
+        assertEquals(1, map.plantsCount());
+    }
+
+    @Test
+    void aliveAnimalsCountTest() {
+        EarthMap map = new EarthMap(5, 5);
+        Animal animal = new Animal(new Vector2d(2, 2), conf, factory);
+        assertEquals(0, map.aliveAnimalsCount());
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail();
+        }
+        assertEquals(1, map.aliveAnimalsCount());
+    }
+
+    @Test
+    void deadAnimalsCountTest() {
+        EarthMap map = new EarthMap(5, 5);
+        Animal animal = new Animal(new Vector2d(2, 2), conf, factory);
+        assertEquals(0, map.deadAnimalsCount());
+        try {
+            map.place(animal);
+        } catch (IncorrectPositionException e) {
+            fail();
+        }
+        for (int i = 0; i < 20; i++) {
+            map.moveAnimal(animal);
+        }
+        assertEquals(1, map.deadAnimalsCount());
+    }
+
+    @Test
+    void emptyPositionsCountTest() {
+        EarthMap map = new EarthMap(5, 5);
+        Animal animal1 = new Animal(new Vector2d(2, 2), conf, factory);
+        Animal animal2 = new Animal(new Vector2d(2, 3), conf, factory);
+        Animal animal3 = new Animal(new Vector2d(2, 3), conf, factory);
+        assertEquals(25, map.emptyPositionsCount());
+        try {
+            map.place(animal1);
+        } catch (IncorrectPositionException e) {
+            fail();
+        }
+        assertEquals(24, map.emptyPositionsCount());
+        try {
+            map.place(animal2);
+        } catch (IncorrectPositionException e) {
+            fail();
+        }
+        assertEquals(23, map.emptyPositionsCount());
+        try {
+            map.place(animal3);
+        } catch (IncorrectPositionException e) {
+            fail();
+        }
+        assertEquals(23, map.emptyPositionsCount());
     }
 }
