@@ -68,8 +68,7 @@ public abstract class GenomesAbstract {
         return genomes.get(oldGenom);
     }
     public int getActiveGenome() {
-        int oldGenom = activeGenom;
-        return genomes.get(oldGenom);
+        return activeGenom;
     }
 
     @Override
