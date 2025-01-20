@@ -23,6 +23,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ConfigPresenter {
     @FXML
@@ -146,7 +148,11 @@ public class ConfigPresenter {
     public void onLoadClicked() {
         ConfigLoader configLoader = new ConfigLoader(this);
         Stage primaryStage = new Stage();
+        Path path = Paths.get("");
+        File directory = new File(path.toAbsolutePath() + File.separator + "src" + File.separator + "main"
+                + File.separator + "resources" + File.separator + "configs");
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(directory);
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
         if (selectedFile != null) {
             if (configLoader.set(selectedFile)) {

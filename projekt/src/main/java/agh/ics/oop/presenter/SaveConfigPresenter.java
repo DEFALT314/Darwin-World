@@ -8,6 +8,8 @@ import javafx.scene.paint.Paint;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class SaveConfigPresenter {
     @FXML
@@ -15,6 +17,12 @@ public class SaveConfigPresenter {
     @FXML
     public Label messageLabel;
     private ConfigPresenter presenter;
+    @FXML
+    public void initialize() {
+        Path path = Paths.get("");
+        directoryName.setText(path.toAbsolutePath() + File.separator + "src" + File.separator + "main"
+                + File.separator + "resources" + File.separator + "configs");
+    }
 
     public void setPresenter(ConfigPresenter presenter) {
         this.presenter = presenter;
