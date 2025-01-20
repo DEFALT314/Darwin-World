@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class ConfigWriter {
     public Boolean write(ConfigPresenter pres, String directoryName, String fileName) {
-        if (directoryName == null || directoryName.trim().length() == 0 || fileName == null || fileName.trim().length() == 0) {
+        if (directoryName == null || directoryName.trim().isEmpty() || fileName == null || fileName.trim().isEmpty()) {
             return false;
         }
         try (OutputStream out = new FileOutputStream(directoryName + File.separator + fileName + ".properties")) {
